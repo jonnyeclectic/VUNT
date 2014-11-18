@@ -5,6 +5,8 @@ class Auth extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->library('ion_auth');
+		$this->load->library('form_validation');
 		$this->load->database();
 		$this->load->library(array('ion_auth','form_validation'));
 		$this->load->helper(array('url','language'));
@@ -17,7 +19,6 @@ class Auth extends CI_Controller {
 	//redirect if needed, otherwise display the user list
 	function index()
 	{
-
 		if (!$this->ion_auth->logged_in())
 		{
 			//redirect them to the login page
@@ -64,7 +65,7 @@ class Auth extends CI_Controller {
 				//if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('/', 'refresh');
+				redirect('/account', 'refresh');
 			}
 			else
 			{

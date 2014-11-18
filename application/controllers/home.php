@@ -4,6 +4,7 @@ class Home extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
+		anchor();
 		echo "Here's some shit";
 	}
 	
