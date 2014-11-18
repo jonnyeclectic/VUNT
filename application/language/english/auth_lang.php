@@ -28,6 +28,7 @@ $lang['login_password_label']  = 'Password:';
 $lang['login_remember_label']  = 'Remember Me:';
 $lang['login_submit_btn']      = 'Login';
 $lang['login_forgot_password'] = 'Forgot your password?';
+$lang['login_logout'] = 'Logout';
 
 // Index
 $lang['index_heading']           = 'Users';
@@ -144,3 +145,7 @@ $lang['reset_password_new_password_confirm_label']            = 'Confirm New Pas
 $lang['reset_password_submit_btn']                            = 'Change';
 $lang['reset_password_validation_new_password_label']         = 'New Password';
 $lang['reset_password_validation_new_password_confirm_label'] = 'Confirm New Password';
+
+// Home
+$lang['home_heading'] = 'VUNT';
+$lang['home_subheading'] = 'The Election System for University of North Texas';

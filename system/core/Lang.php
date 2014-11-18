@@ -144,7 +144,6 @@ class CI_Lang {
 	{
 		$value = ($line == '' OR ! isset($this->language[$line])) ? FALSE : $this->language[$line];
 
-		// Because killer robots like unicorns!
 		if ($value === FALSE)
 		{
 			log_message('error', 'Could not find the language line "'.$line.'"');
