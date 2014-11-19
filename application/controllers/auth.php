@@ -10,10 +10,9 @@ class Auth extends CI_Controller {
 		$this->load->database();
 		$this->load->library(array('ion_auth','form_validation'));
 		$this->load->helper(array('url','language'));
-
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
-
 		$this->lang->load('auth');
+		$this->load->view('auth/home');
 	}
 
 	//redirect if needed, otherwise display the user list
@@ -65,7 +64,7 @@ class Auth extends CI_Controller {
 				//if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('/account', 'refresh');
+				redirect('auth/index', 'refresh');
 			}
 			else
 			{
@@ -90,7 +89,7 @@ class Auth extends CI_Controller {
 				'id' => 'password',
 				'type' => 'password',
 			);
-
+			
 			$this->_render_page('auth/login', $this->data);
 		}
 	}
@@ -99,13 +98,14 @@ class Auth extends CI_Controller {
 	function logout()
 	{
 		$this->data['title'] = "Logout";
-
+		
 		//log the user out
 		$logout = $this->ion_auth->logout();
-
+		
 		//redirect them to the login page
 		$this->session->set_flashdata('message', $this->ion_auth->messages());
-		redirect('auth/login', 'refresh');
+
+		redirect('home', 'refresh');
 	}
 
 	//change password
@@ -409,14 +409,8 @@ class Auth extends CI_Controller {
 	}
 
 	//create a new user
-	function create_user()
+	function create_user($title = "Create User")
 	{
-		$this->data['title'] = "Create User";
-
-		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
-		{
-			redirect('auth', 'refresh');
-		}
 
 		$tables = $this->config->item('tables','ion_auth');
 
@@ -774,6 +768,15 @@ class Auth extends CI_Controller {
 		$this->session->set_flashdata('csrfvalue', $value);
 
 		return array($key => $value);
+	}
+	
+	function account()
+	{
+		$this->data['title'] = $this->lang->line('edit_group_title');
+		echo "VIEWING PROFILE NOW..... [buttons for profile and voting]";
+		//$this->_render_page('home', $this->data);
+		$this->_render_page('account', $this->data);
+		
 	}
 
 	function _valid_csrf_nonce()

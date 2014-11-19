@@ -28,7 +28,8 @@ $lang['login_password_label']  = 'Password:';
 $lang['login_remember_label']  = 'Remember Me:';
 $lang['login_submit_btn']      = 'Login';
 $lang['login_forgot_password'] = 'Forgot your password?';
-$lang['login_logout'] = 'Logout';
+$lang['login_logout'] 		   = 'Logout';
+$lang['login_logout_subheading'] = 'Logged out successfully';
 
 // Index
 $lang['index_heading']           = 'Users';
