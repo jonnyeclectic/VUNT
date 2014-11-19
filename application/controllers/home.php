@@ -17,17 +17,15 @@ class Home extends CI_Controller {
 	
 	public function index(){
 		$this->data['title'] = "Home";
-		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
+		if (!$this->ion_auth->logged_in())
 			Auth::create_user($this->data['title']);
 		else {
-			$user = $this->ion_auth->user()->row();
-			//set the flash data error message if there is one
+
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+			$this->data['user'] = $this->ion_auth->user()->row();
+			$this->data['user']->groups = $this->ion_auth->get_users_groups($this->data['user']->id)->result();
 			//list the users
-			$this->data['groups'] = $this->ion_auth->group($user->id)->row();
-			$this->data['user']	 = $user;//this->ion_auth->get_users_groups($user->id)->result();
-			
-			//$this->load->view('auth/index');
+
 			$this->_render_page('auth/account', $this->data);
 		}
 	}
