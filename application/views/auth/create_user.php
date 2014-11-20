@@ -19,6 +19,7 @@
       	<?php
     	foreach($myDropdown as $dd)
         echo "<option value='". $dd->name ."'>". $dd->name ."</option>";
+		
 		?>
 	  </p>
 	  </select>
@@ -56,3 +57,5 @@
       <p><?php echo form_submit('submit', lang('create_user_submit_btn'));?></p>
 
 <?php echo form_close();?>
+
+

@@ -410,15 +410,61 @@ class Auth extends CI_Controller {
 		}
 	}
 
+
+/**
+ * @multi select dropdown menu
+ *
+ * @param string $name
+ *
+ * @param array $options
+ *
+ * @param array $selected (default null)
+ *
+ * @param int size (optional)
+ *
+ * @return string
+ *
+ */
+function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
+{
+        /*** begin the select ***/
+        $dropdown = '<select name="'.$name.'" id="'.$name.'" size="'.$size.'" multiple>'."\n";
+
+        /*** loop over the options ***/
+        foreach( $options as $key=>$option )
+        {
+                /*** assign a selected value ***/
+                $select = in_array( $option, $selected ) ? ' selected' : null;
+
+                /*** add each option to the dropdown ***/
+                $dropdown .= '<option value="'.$key.'"'.$select.'>'.$option.'</option>'."\n";
+        }
+
+        /*** close the select ***/
+        $dropdown .= '</select>'."\n";
+
+        /*** and return the completed dropdown ***/
+        return $dropdown;
+}
+
 	//create a new user
 	function create_user($title = "Create User")
 	{
+
+//$name = 'multi_dropdown';
+//$options = $this->db->list_fields('colleges');//array( 'dingo', 'wombat', 'kangaroo', 'steve irwin', 'wallaby', 'kookaburra' );
+//$selected = array( 'General');//array( 'dingo', 'kangaroo', 'kookaburra' );
+    //foreach($options as $dd)
+
+//echo $this->multi_dropdown( $name, $options, $selected , 6);
+
 		$query = $this->db->field_data('colleges');
 		if($query)
 			{
     			$this->data['myDropdown'] = $query;
     			//$this->load->view('auth/dropdown', $this->data);
 			}
+			
 		$tables = $this->config->item('tables','ion_auth');
 
 		//validate form input
