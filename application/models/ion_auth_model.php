@@ -1259,6 +1259,32 @@ class Ion_auth_model extends CI_Model
 
 		return $result;
 	}
+	
+	public function elections($college = NULL)
+	{
+		if (isset($college))
+		{
+			$query = $this->db->get('elections');
+		}
+		else
+		{
+			$query = $this->db->get('elections');
+		}
+		
+		$i = 0;
+		foreach ($query->result() as $row)
+		{
+			$elections[$i]['name'] = $row->name;
+			$elections[$i]['description'] = $row->description;
+			$elections[$i]['college'] = $row->college;
+			$elections[$i]['start_time'] = $row->start_time;
+			$elections[$i]['end_time'] = $row->end_time;
+			$elections[$i]['status'] = $row->status;
+			$i++;
+		}
+		
+		return $elections;
+	}
 
 	/**
 	 * users

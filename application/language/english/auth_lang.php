@@ -153,3 +153,13 @@ $lang['reset_password_validation_new_password_confirm_label'] = 'Confirm New Pas
 // Home
 $lang['home_heading'] = 'VUNT';
 $lang['home_subheading'] = 'The Election System for University of North Texas';
+
+// Elections
+$lang['election_heading'] 			= 'Elections';
+$lang['election_subheading'] 		= 'Below are the current active elections.';
+$lang['election_name_label'] 		= 'Name';
+$lang['election_description_label'] = 'Description';
+$lang['election_college_label'] 	= 'College';
+$lang['election_start_time_label'] 	= 'Start Time';
+$lang['election_end_time_label'] 	= 'End Time';
+$lang['election_status_label'] 		= 'Status';
