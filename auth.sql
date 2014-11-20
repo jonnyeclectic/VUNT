@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2014 at 8:13 PM
--- Server version: 5.6.20
--- PHP Version: 5.5.15
+-- Generation Time: Nov 20, 2014 at 12:06 PM
+-- Server version: 5.5.39
+-- PHP Version: 5.4.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,20 +17,69 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `unt_proto`
+-- Database: `auth`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `election`
+-- Table structure for table `candidates`
 --
 
-CREATE TABLE IF NOT EXISTS `election` (
-`id` int(11) NOT NULL,
-  `election_name` varchar(100) NOT NULL,
-  `election_description` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `candidates` (
+  `candidate_id` int(11) NOT NULL,
+  `election_id` int(11) NOT NULL,
+  `num_votes` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `candidates`
+--
+
+INSERT INTO `candidates` (`candidate_id`, `election_id`, `num_votes`) VALUES
+(1, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `college`
+--
+
+CREATE TABLE IF NOT EXISTS `college` (
+  `college_id` int(11) NOT NULL,
+  `college` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `college`
+--
+
+INSERT INTO `college` (`college_id`, `college`) VALUES
+(1, 'business');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `elections`
+--
+
+CREATE TABLE IF NOT EXISTS `elections` (
+  `election_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `description` varchar(16384) NOT NULL,
+  `college` varchar(64) NOT NULL,
+  `college_id` int(11) NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  `status` varchar(16) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `elections`
+--
+
+INSERT INTO `elections` (`election_id`, `name`, `description`, `college`, `college_id`, `start_time`, `end_time`, `status`) VALUES
+(0, 'StuGov President', 'Election to decide the president of the student government.', 'College of Engineering', 0, '2014-11-18 00:00:00', '2014-11-21 00:00:00', 'active');
 
 -- --------------------------------------------------------
 
@@ -42,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
 `id` mediumint(8) unsigned NOT NULL,
   `name` varchar(20) NOT NULL,
   `description` varchar(100) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `groups`
@@ -50,9 +99,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
 
 INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 (1, 'admin', 'Administrator'),
-(2, 'members', 'General User'),
-(3, 'candidates', 'The Election Candidates'),
-(4, 'voters', 'All the users that are registered to vote');
+(2, 'members', 'General User');
 
 -- --------------------------------------------------------
 
@@ -91,16 +138,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_name` varchar(50) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'JYUnmSCuWwE.zu.zxJdOuu', 1268889823, 1411659273, 1, 'Chad', 'Smith', 'None', '2147296420'),
-(5, '::1', 'cs0357', '$2y$08$EudIpAx2WvO.7o4EJfAkf.RrWyMGawsMxr.Qt5ebzyHAS0TuerUO2', NULL, 'chadsmith4@my.unt.edu', NULL, NULL, NULL, NULL, 1411505230, 1411505262, 1, 'Chad', 'Smith', NULL, NULL),
-(6, '::1', 'km0389', '$2y$08$Omns6N4bIV7AtZL8KNqja.65mxtbgCFPEBOmWCR69zsZMI/QK2.DO', NULL, 'test@test.com', NULL, NULL, NULL, NULL, 1411658190, 1411658208, 1, 'Test', 'Test', NULL, NULL);
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1416464204, 1, 'Admin', 'istrator', 'ADMIN', '0');
 
 -- --------------------------------------------------------
 
@@ -112,28 +157,19 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 `id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `users_groups`
 --
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
-(21, 1, 1),
-(22, 1, 2),
-(29, 5, 1),
-(30, 5, 2),
-(14, 6, 2);
+(1, 1, 1),
+(2, 1, 2);
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `election`
---
-ALTER TABLE `election`
- ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `groups`
@@ -164,15 +200,10 @@ ALTER TABLE `users_groups`
 --
 
 --
--- AUTO_INCREMENT for table `election`
---
-ALTER TABLE `election`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `login_attempts`
 --
@@ -182,12 +213,12 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --

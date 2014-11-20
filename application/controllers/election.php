@@ -39,6 +39,14 @@ class Election extends CI_Controller {
 		}
 	}
 	
+	function vote($election_id)
+	{
+		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+		$this->data['candidates'] = $this->ion_auth->candidates($election_id);
+		$this->data['election_name'] = $this->ion_auth->name_election($election_id);
+		$this->_render_page('election/voting_index', $this->data);
+	}
+	
 	function _render_page($view, $data=null, $render=false)
 	{
 		$this->viewdata = (empty($data)) ? $this->data: $data;
