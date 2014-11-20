@@ -13,6 +13,7 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 		$this->lang->load('auth');
 		$this->load->view('auth/home');
+		
 	}
 
 	//redirect if needed, otherwise display the user list
@@ -26,7 +27,8 @@ class Auth extends CI_Controller {
 		elseif (!$this->ion_auth->is_admin()) //remove this elseif if you want to enable this for non-admins
 		{
 			//redirect them to the home page because they must be an administrator to view this
-			return show_error('You must be an administrator to view this page.');
+			redirect('home', 'refresh');
+			//return show_error('You must be an administrator to view this page.');
 		}
 		else
 		{
@@ -411,7 +413,12 @@ class Auth extends CI_Controller {
 	//create a new user
 	function create_user($title = "Create User")
 	{
-
+		$query = $this->db->field_data('colleges');
+		if($query)
+			{
+    			$this->data['myDropdown'] = $query;
+    			//$this->load->view('auth/dropdown', $this->data);
+			}
 		$tables = $this->config->item('tables','ion_auth');
 
 		//validate form input
@@ -420,6 +427,7 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique['.$tables['users'].'.email]');
 		$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('company2', $this->lang->line('create_user_validation_company2_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
@@ -433,6 +441,7 @@ class Auth extends CI_Controller {
 				'first_name' => $this->input->post('first_name'),
 				'last_name'  => $this->input->post('last_name'),
 				'company'    => $this->input->post('company'),
+				'company2'   => $this->input->post('company2'),
 				'phone'      => $this->input->post('phone'),
 			);
 		}
@@ -473,6 +482,12 @@ class Auth extends CI_Controller {
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('company'),
 			);
+			$this->data['company2'] = array(
+				'name'  => 'company2',
+				'id'    => 'company2',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('company2'),
+			);
 			$this->data['phone'] = array(
 				'name'  => 'phone',
 				'id'    => 'phone',
@@ -499,6 +514,12 @@ class Auth extends CI_Controller {
 	//edit a user
 	function edit_user($id)
 	{
+		$query = $this->db->field_data('colleges');
+			if($query)
+			{
+    			$this->data['myDropdown'] = $query;
+    			//$this->load->view('auth/dropdown', $this->data);
+			}
 		$this->data['title'] = "Edit User";
 
 		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
@@ -515,6 +536,7 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('company2', $this->lang->line('edit_user_validation_company2_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
 
 		if (isset($_POST) && !empty($_POST))
@@ -538,9 +560,10 @@ class Auth extends CI_Controller {
 					'first_name' => $this->input->post('first_name'),
 					'last_name'  => $this->input->post('last_name'),
 					'company'    => $this->input->post('company'),
+					'company2'   => $this->input->post('company2'),
 					'phone'      => $this->input->post('phone'),
 				);
-				
+
 				//update the password if it was posted
 				if ($this->input->post('password'))
 				{
@@ -628,6 +651,12 @@ class Auth extends CI_Controller {
 			'type'  => 'text',
 			'value' => $this->form_validation->set_value('company', $user->company),
 		);
+		$this->data['company2'] = array(
+			'name'  => 'company2',
+			'id'    => 'company2',
+			'type'  => 'text',
+			'value' => $this->form_validation->set_value('company2', $user->company2),
+		);
 		$this->data['phone'] = array(
 			'name'  => 'phone',
 			'id'    => 'phone',
@@ -644,7 +673,7 @@ class Auth extends CI_Controller {
 			'id'   => 'password_confirm',
 			'type' => 'password'
 		);
-
+		
 		$this->_render_page('auth/edit_user', $this->data);
 	}
 

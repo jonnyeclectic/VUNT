@@ -1,3 +1,4 @@
+
 <table cellpadding=0 cellspacing=10>
 	<tr>
 		<th><h1><?php echo anchor('home', lang('home_heading'));?></h1></th>

@@ -5,7 +5,6 @@
 <table cellpadding=0 cellspacing=10>
 	<tr>
 		<th><?php echo lang('index_groups_th');?></th>
-		<th><?php echo lang('index_status_th');?></th>
 	</tr>
 		<tr>
 			<td>

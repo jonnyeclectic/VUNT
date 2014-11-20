@@ -1,4 +1,4 @@
-<?php
+<?php 
 include 'application\controllers\auth.php';
 
 class Home extends CI_Controller {
@@ -14,13 +14,12 @@ class Home extends CI_Controller {
 		$this->lang->load('auth');
 		$this->load->view('auth/home');
 	}
-	
+
 	public function index(){
 		$this->data['title'] = "Home";
 		if (!$this->ion_auth->logged_in())
 			Auth::create_user($this->data['title']);
 		else {
-
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 			$this->data['user'] = $this->ion_auth->user()->row();
 			$this->data['user']->groups = $this->ion_auth->get_users_groups($this->data['user']->id)->result();

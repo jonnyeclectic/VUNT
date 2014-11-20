@@ -14,10 +14,22 @@
             <?php echo lang('create_user_lname_label', 'last_name');?> <br />
             <?php echo form_input($last_name);?>
       </p>
-
+      <select>
+      <p>
+      	<?php
+    	foreach($myDropdown as $dd)
+        echo "<option value='". $dd->name ."'>". $dd->name ."</option>";
+		?>
+	  </p>
+	  </select>
       <p>
             <?php echo lang('create_user_company_label', 'company');?> <br />
             <?php echo form_input($company);?>
+      </p>
+      
+      <p>
+            <?php echo lang('create_user_company2_label', 'company');?> <br />
+            <?php echo form_input($company2);?>
       </p>
 
       <p>
