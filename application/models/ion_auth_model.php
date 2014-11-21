@@ -1343,6 +1343,40 @@ class Ion_auth_model extends CI_Model
 		$this->db->update('candidates', $update);
 	}
 	
+	public function unvote($election_id, $candidate_id, $user_id)
+	{
+		$removing = array(
+			'election_id' => $election_id,
+			'candidate_id' => $candidate_id,
+			'user_id' => $user_id
+		);
+		$this->db->delete('votes', $removing);
+		
+		$this->db->where('election_id', $election_id);
+		$this->db->where('candidate_id', $candidate_id);
+		$query = $this->db->get('candidates');
+		foreach($query->result() as $row)
+		{
+			$num_votes = $row->num_votes;
+		}
+		$num_votes--;
+		$update = array('num_votes' => $num_votes);
+		$this->db->where('election_id', $election_id);
+		$this->db->where('candidate_id', $candidate_id);
+		$this->db->update('candidates', $update);
+	}
+	
+	public function voted($user_id, $election_id)
+	{
+		$this->db->where('election_id', $election_id);
+		$this->db->where('user_id', $user_id);
+		$query = $this->db->get('votes');
+		foreach ($query->result() as $row){
+			return $row->candidate_id;
+		}
+		return NULL;
+	}
+	
 	public function name_election($election_id)
 	{
 		$this->db->select('election_id, name');

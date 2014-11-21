@@ -10,7 +10,12 @@
 	<?php for ($i = 0; isset($candidates[$i]); $i++):?>
 		<tr>
             <td><?php echo htmlspecialchars($candidates[$i]['first_name'].' '.$candidates[$i]['last_name'],ENT_QUOTES,'UTF-8');?></td>
+            <?php if (!isset($voted)): ?>
            		<td><?php echo anchor('election/vote_for/'.$election_id.'/'.$candidates[$i]['candidate_id'], 'Vote');?></td>
+           	<?php endif; ?>
+           	<?php if ($voted === $candidates[$i]['candidate_id']): ?>
+           		<td><?php echo anchor('election/unvote_for/'.$election_id.'/'.$candidates[$i]['candidate_id'], 'Unvote');?></td>
+           	<?php endif; ?>
 		</tr>
 	<?php endfor;?>
 </table>

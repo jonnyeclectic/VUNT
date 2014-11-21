@@ -45,12 +45,19 @@ class Election extends CI_Controller {
 		$this->data['election_id'] = $election_id;
 		$this->data['candidates'] = $this->ion_auth->candidates($election_id);
 		$this->data['election_name'] = $this->ion_auth->name_election($election_id);
+		$this->data['voted'] = $this->ion_auth->voted($this->ion_auth->user()->row()->id, $election_id);
 		$this->_render_page('election/voting_index', $this->data);
 	}
 	
 	function vote_for($election_id, $candidate_id)
 	{
 		$this->ion_auth->vote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
+		redirect('election/vote/'.$election_id, 'refresh');
+	}
+	
+	function unvote_for($election_id, $candidate_id)
+	{
+		$this->ion_auth->unvote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		redirect('election/vote/'.$election_id, 'refresh');
 	}
 	
