@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2014 at 11:05 AM
+-- Generation Time: Nov 21, 2014 at 08:45 PM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -42,20 +42,32 @@ INSERT INTO `candidates` (`candidate_id`, `election_id`, `num_votes`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `college`
+-- Table structure for table `colleges`
 --
 
-CREATE TABLE IF NOT EXISTS `college` (
-  `college_id` int(11) NOT NULL,
-  `college` varchar(64) NOT NULL
+CREATE TABLE IF NOT EXISTS `colleges` (
+  `College of Arts and Sciences` int(13) NOT NULL,
+  `College of Business` int(1) NOT NULL,
+  `College of Education` int(2) NOT NULL,
+  `College of Engineering` int(3) NOT NULL,
+  `College of Information` int(4) NOT NULL,
+  `College of Merchandising, Hospitality and Tourism` int(5) NOT NULL,
+  `College of Music` int(6) NOT NULL,
+  `College of Public Affairs and Community Service` int(7) NOT NULL,
+  `College of Visual Arts and Design` int(8) NOT NULL,
+  `Frank W. and Sue Mayborn School of Journalism` int(9) NOT NULL,
+  `Honors College` int(10) NOT NULL,
+  `Texas Academy of Mathematics and Science` int(11) NOT NULL,
+  `Toulouse Graduate School` int(12) NOT NULL,
+  `General` int(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `college`
+-- Dumping data for table `colleges`
 --
 
-INSERT INTO `college` (`college_id`, `college`) VALUES
-(1, 'business');
+INSERT INTO `colleges` (`College of Arts and Sciences`, `College of Business`, `College of Education`, `College of Engineering`, `College of Information`, `College of Merchandising, Hospitality and Tourism`, `College of Music`, `College of Public Affairs and Community Service`, `College of Visual Arts and Design`, `Frank W. and Sue Mayborn School of Journalism`, `Honors College`, `Texas Academy of Mathematics and Science`, `Toulouse Graduate School`, `General`) VALUES
+(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
 
 -- --------------------------------------------------------
 
@@ -138,14 +150,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_name` varchar(50) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1416561280, 1, 'Admin', 'istrator', 'ADMIN', '0');
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1416596607, 1, 'Admin', 'istrator', 'ADMIN', '0'),
+(2, '::1', 'chris fitch', '$2y$08$Xyq7UY/VZwlzt3zropvU0uc9viF08bfWXXxhOcuHb/P1J8WsyiLmi', NULL, 'zapheres@gmail.com', NULL, NULL, NULL, NULL, 1416592884, 1416592922, 1, 'Chris', 'Fitch', 'College of Engineering', 'ccf0056');
 
 -- --------------------------------------------------------
 
@@ -157,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 `id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `users_groups`
@@ -165,7 +178,8 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (1, 1, 1),
-(2, 1, 2);
+(2, 1, 2),
+(3, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -185,14 +199,18 @@ CREATE TABLE IF NOT EXISTS `votes` (
 --
 
 INSERT INTO `votes` (`id`, `user_id`, `election_id`, `candidate_id`) VALUES
-(1, 1, 0, 1),
-(2, 1, 0, 1),
-(3, 1, 0, 1),
-(4, 1, 0, 1);
+(1, 2, 0, 1),
+(2, 1, 0, 1);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `colleges`
+--
+ALTER TABLE `colleges`
+ ADD KEY `College of Arts and Sciences` (`College of Arts and Sciences`,`College of Business`), ADD KEY `College of Arts and Sciences_2` (`College of Arts and Sciences`);
 
 --
 -- Indexes for table `groups`
@@ -236,12 +254,12 @@ MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
