@@ -39,6 +39,8 @@ class Election extends CI_Controller {
 		}
 	}
 	
+	
+	
 	function vote($election_id)
 	{
 		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');

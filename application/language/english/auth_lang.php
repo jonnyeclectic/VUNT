@@ -169,4 +169,5 @@ $lang['election_action_label']		= 'Action';
 $lang['voting_heading'] 	 = 'Candidates for ';
 $lang['voting_subheading'] 	 = 'Below are the candidates for this election.';
 $lang['voting_name_label'] 	 = 'Name';
+$lang['voting_votes_label']  = 'Votes';
 $lang['voting_action_label'] = 'Action';
