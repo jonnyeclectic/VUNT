@@ -451,12 +451,11 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 	function create_user($title = "Create User")
 	{
 
-//$name = 'multi_dropdown';
-//$options = $this->db->list_fields('colleges');//array( 'dingo', 'wombat', 'kangaroo', 'steve irwin', 'wallaby', 'kookaburra' );
-//$selected = array( 'General');//array( 'dingo', 'kangaroo', 'kookaburra' );
-    //foreach($options as $dd)
-
-//echo $this->multi_dropdown( $name, $options, $selected , 6);
+		$this->data['name'] = 'multi_dropdown';
+		$this->data['options'] = $this->db->list_fields('colleges');
+		$this->data['selected'] = array( 'General', 'College of Engineering');
+   		//foreach($options as $dd)
+		
 
 		$query = $this->db->field_data('colleges');
 		if($query)

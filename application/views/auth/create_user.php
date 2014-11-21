@@ -1,5 +1,6 @@
 <div id="infoMessage"><?php echo $message;?></div>
 <h1><?php echo lang('create_user_heading');?></h1>
+<?php echo Auth::multi_dropdown($name, $options, $selected );?>
 <p><?php echo lang('create_user_subheading');?></p>
 
 
