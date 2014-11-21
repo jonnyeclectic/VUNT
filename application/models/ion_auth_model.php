@@ -1264,13 +1264,9 @@ class Ion_auth_model extends CI_Model
 	{
 		if (isset($college))
 		{
-			$query = $this->db->get('elections');
-			$query = $this->db->get_where('elections', 'college', $college);
+			$query = $this->db->where('college', $college);
 		}
-		else
-		{
-			$query = $this->db->get('elections');
-		}
+		$query = $this->db->get('elections');
 		
 		$i = 0;
 		foreach ($query->result() as $row)
@@ -1290,6 +1286,7 @@ class Ion_auth_model extends CI_Model
 	
 	public function candidates($election_id)
 	{
+		$this->db->where('election_id', $election_id);
 		$query = $this->db->get('candidates');//, 'election_id', $election_id);
 		$this->db->select('id, first_name, last_name');
 		$query2 = $this->db->get('users');
@@ -1312,6 +1309,38 @@ class Ion_auth_model extends CI_Model
 		}
 		
 		return $candidates;
+	}
+	
+	public function vote($election_id, $candidate_id, $user_id)
+	{
+		$id = 0;
+		$query = $this->db->get('votes');
+		//if (!empty($query->result()))
+		//{
+			foreach($query->result() as $row)
+				$id = $row->id;
+		//}
+		$id++;
+		$vote = array(
+			'id' => $id,
+			'user_id' => $user_id,
+			'election_id' => $election_id,
+			'candidate_id' => $candidate_id
+		);
+		$this->db->insert('votes', $vote);
+		
+		$this->db->where('election_id', $election_id);
+		$this->db->where('candidate_id', $candidate_id);
+		$query = $this->db->get('candidates');
+		foreach($query->result() as $row)
+		{
+			$num_votes = $row->num_votes;
+		}
+		$num_votes++;
+		$update = array('num_votes' => $num_votes);
+		$this->db->where('election_id', $election_id);
+		$this->db->where('candidate_id', $candidate_id);
+		$this->db->update('candidates', $update);
 	}
 	
 	public function name_election($election_id)

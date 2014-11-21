@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2014 at 12:06 PM
+-- Generation Time: Nov 21, 2014 at 11:05 AM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `candidates` (
 --
 
 INSERT INTO `candidates` (`candidate_id`, `election_id`, `num_votes`) VALUES
-(1, 0, 0);
+(1, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1416464204, 1, 'Admin', 'istrator', 'ADMIN', '0');
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1416561280, 1, 'Admin', 'istrator', 'ADMIN', '0');
 
 -- --------------------------------------------------------
 
@@ -166,6 +166,29 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (1, 1, 1),
 (2, 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `votes`
+--
+
+CREATE TABLE IF NOT EXISTS `votes` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `election_id` int(11) NOT NULL,
+  `candidate_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `votes`
+--
+
+INSERT INTO `votes` (`id`, `user_id`, `election_id`, `candidate_id`) VALUES
+(1, 1, 0, 1),
+(2, 1, 0, 1),
+(3, 1, 0, 1),
+(4, 1, 0, 1);
 
 --
 -- Indexes for dumped tables
