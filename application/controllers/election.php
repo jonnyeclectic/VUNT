@@ -23,18 +23,20 @@ class Election extends CI_Controller {
 			//redirect them to the login page
 			redirect('auth/login', 'refresh');
 		}
-		elseif (!$this->ion_auth->is_admin()) //remove this elseif if you want to enable this for non-admins
-		{
-			//redirect them to the home page because they must be an administrator to view this
-			return show_error('You must be an administrator to view this page.');
-		}
 		else
 		{
+			if (!$this->ion_auth->is_admin())
+			{
+				$this->data['elections'] = $this->ion_auth->elections();
+			}
+			else 
+			{
+				$this->data['elections'] = $this->ion_auth->elections($this->ion_auth->user()->row()->college);	
+			}
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
 			//list the elections
-			$this->data['elections'] = $this->ion_auth->elections();
 			
 			$i = 0;
 			if(isset($this->data['elections']))

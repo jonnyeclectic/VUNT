@@ -1259,11 +1259,13 @@ class Ion_auth_model extends CI_Model
 		return $result;
 	}
 	
-	public function elections($college = NULL)
+	public function elections($colleges = NULL)
 	{
-		if (isset($college))
+		if (isset($colleges))
 		{
-			$query = $this->db->where('college', $college);
+			$this->db->where('college', 'General');
+			foreach ($colleges as $college)
+				$this->db->or_where('college', $college);
 		}
 		$query = $this->db->get('elections');
 		
