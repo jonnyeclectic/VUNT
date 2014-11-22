@@ -2,7 +2,7 @@
 <h1><?php echo lang('election_heading');?></h1>
 <?php echo anchor('election/create_election', lang('election_create_label'))?>
 <p><?php echo lang('election_subheading');?></p>
-
+<?php if(isset($elections)):?>
 <table cellpadding=0 cellspacing=10>
 	<tr>
 		<th><?php echo lang('election_name_label');?></th>
@@ -34,3 +34,4 @@
 		</tr>
 	<?php endfor;?>
 </table>
+<?php endif;?>

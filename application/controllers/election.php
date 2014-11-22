@@ -35,7 +35,9 @@ class Election extends CI_Controller {
 
 			//list the elections
 			$this->data['elections'] = $this->ion_auth->elections();
+			
 			$i = 0;
+			if(isset($this->data['elections']))
 			foreach ($this->data['elections'] as $election)
 			{
 				if ($election['status'] === 'inactive')
@@ -75,7 +77,7 @@ class Election extends CI_Controller {
 		}
 
 		//validate form input
-		$this->form_validation->set_rules('name', $this->lang->line('create_group_validation_name_label'), 'required|alpha_dash|xss_clean');
+		$this->form_validation->set_rules('name', $this->lang->line('create_group_validation_name_label'));
 		$this->form_validation->set_rules('description', $this->lang->line('create_group_validation_desc_label'), 'xss_clean');
 		$this->form_validation->set_rules('college', $this->lang->line('create_group_validation_desc_label'), 'xss_clean');
 		$this->form_validation->set_rules('start_time', $this->lang->line('create_group_validation_desc_label'), 'xss_clean');

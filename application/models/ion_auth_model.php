@@ -1280,7 +1280,10 @@ class Ion_auth_model extends CI_Model
 			$i++;
 		}
 		
-		return $elections;
+		if (isset($elections))
+			return $elections;
+		else 
+			return NULL;
 	}
 	
 	public function candidates($election_id)

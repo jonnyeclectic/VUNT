@@ -6,6 +6,7 @@ class Settings extends CI_Hooks {
         $CI =& get_instance();
 		$elections = $CI->ion_auth->elections();
 		$current_time = strtotime(date('Y-m-d G:i:s'));
+		if(isset($elections))
 		foreach ($elections as $election)
 		{
 			if (strtotime($election['start_time']) > $current_time)
