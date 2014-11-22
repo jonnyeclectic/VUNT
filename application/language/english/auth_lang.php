@@ -165,6 +165,7 @@ $lang['election_end_time_label'] 	= 'End Time';
 $lang['election_status_label'] 		= 'Status';
 $lang['election_winner_label'] 		= 'Winner';
 $lang['election_action_label']		= 'Action';
+$lang['election_create_label']		= 'Create an Election';
 
 // Voting
 $lang['voting_heading'] 	 = 'Candidates for ';

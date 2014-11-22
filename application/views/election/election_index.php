@@ -1,5 +1,6 @@
 <div id="infoMessage"><?php echo $message;?></div>
 <h1><?php echo lang('election_heading');?></h1>
+<?php echo anchor('election/create', lang('election_create_label'))?>
 <p><?php echo lang('election_subheading');?></p>
 
 <table cellpadding=0 cellspacing=10>
@@ -12,6 +13,7 @@
 		<th><?php echo lang('election_status_label');?></th>
 		<th><?php echo lang('election_winner_label');?></th>
 		<th><?php echo lang('election_action_label');?></th>
+		
 	</tr>
 	<?php for ($i = 0; isset($elections[$i]); $i++):?>
 		<tr>

@@ -65,6 +65,99 @@ class Election extends CI_Controller {
 		redirect('election/vote/'.$election_id, 'refresh');
 	}
 	
+	function create()
+	{
+		$this->data['title'] = $this->lang->line('create_group_title');
+
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
+		{
+			redirect('auth', 'refresh');
+		}
+
+		//validate form input
+		$this->form_validation->set_rules('election', $this->lang->line('create_group_validation_name_label'), 'required|alpha_dash|xss_clean');
+		$this->form_validation->set_rules('description', $this->lang->line('create_group_validation_desc_label'), 'xss_clean');
+
+		if ($this->form_validation->run() == TRUE)
+		{
+			echo "SUPES HELL";
+			$new_election_id = $this->ion_auth->create_group($this->input->post('election'), $this->input->post('description'));
+			if($new_election_id)
+			{
+				// check to see if we are creating the group
+				// redirect them back to the admin page
+				$this->session->set_flashdata('message', $this->ion_auth->messages());
+				redirect("auth", 'refresh');
+			}
+		}
+		else
+		{
+			echo "PURGATORY";
+			//display the create group form
+			//set the flash data error message if there is one
+			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+			$this->data['election'] = array(
+				'name'  => 'election',
+				'id'    => 'election',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('election'),
+			);
+						
+			$this->data['description'] = array( //DESCRIPTION IZ COLLEGE
+				'name'  => 'description',
+				'id'    => 'description',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('description'),
+			);
+			$this->_render_page('election/create_election', $this->data);
+			///$this->_render_page('auth/create_group', $this->data);
+		}/*
+		$this->data['title'] = $this->lang->line('create_group_title');
+
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
+		{
+			redirect('auth', 'refresh');
+		}
+
+		//validate form input
+		$this->form_validation->set_rules('group_name', $this->lang->line('create_group_validation_name_label'), 'required|alpha_dash|xss_clean');
+		$this->form_validation->set_rules('description', $this->lang->line('create_group_validation_desc_label'), 'xss_clean');
+
+		if ($this->form_validation->run() == TRUE)
+		{
+			$new_group_id = $this->ion_auth->create_group($this->input->post('group_name'), $this->input->post('description'));
+			if($new_group_id)
+			{
+				// check to see if we are creating the group
+				// redirect them back to the admin page
+				$this->session->set_flashdata('message', $this->ion_auth->messages());
+				redirect("auth", 'refresh');
+			}
+		}
+		else
+		{
+			//display the create group form
+			//set the flash data error message if there is one
+			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+			$this->data['group_name'] = array(
+				'name'  => 'group_name',
+				'id'    => 'group_name',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('group_name'),
+			);
+			$this->data['description'] = array(
+				'name'  => 'description',
+				'id'    => 'description',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('description'),
+			);
+
+			$this->_render_page('auth/create_group', $this->data);
+		}*/
+	}
+	
 	function unvote_for($election_id, $candidate_id)
 	{
 		$this->ion_auth->unvote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);

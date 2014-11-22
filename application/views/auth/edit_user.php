@@ -14,24 +14,45 @@
             <?php echo lang('edit_user_lname_label', 'last_name');?> <br />
             <?php echo form_input($last_name);?>
       </p>
-      <select>
+<select multiple = "multiple" name = "formColleges[]">
       <p>
-      	<?php
-    	foreach($myDropdown as $dd)
-        echo "<option value='". $dd->name ."'>". $dd->name ."</option>";
-		?>
+      	<?php foreach($myDropdown as $dd)
+        echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>
+        <input type="submit" name="Submit" value="Submit">
 	  </p>
 	  </select>
-      <p>
-            <?php echo lang('edit_user_company_label', 'company');?> <br />
-            <?php echo form_input($company);?>
-      </p>
+	  <?php
+ 
+if(isset($_POST['formColleges']))
+{
+  $aColleges = $_POST['formColleges'];
+   
+  if(!isset($aColleges))
+  {
+    echo("<p>You didn't select any colleges!</p>\n");
+  } 
+  else
+  {
+    $nColleges = count($aColleges);
+     
+   // echo("<p>You selected $nColleges colleges: ");
+    for($i=0; $i < $nColleges; $i++)
+    {
+      //echo($aColleges[$i] . " ");
       
-            <p>
-            <?php echo lang('edit_user_company_label', 'company2');?> <br />
-            <?php echo form_input($company2);?>
-      </p>
+    }?>
+       <p>
+      		 <?php 
+      		 $company2 = implode(",", $aColleges);
+             echo lang('create_user_company_label', 'company2');
+            echo form_input('company2', $company2);?>
+      </p>   <?php
+    
+    echo("</p>");
+  }
+}
 
+?>
       <p>
             <?php echo lang('edit_user_phone_label', 'phone');?> <br />
             <?php echo form_input($phone);?>
