@@ -471,8 +471,8 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 		$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique['.$tables['users'].'.email]');
 		$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|xss_clean');
-		$this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'required|xss_clean');
-		$this->form_validation->set_rules('company2', $this->lang->line('create_user_validation_company2_label'), 'required|xss_clean');
+		//$this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('company2', $this->lang->line('create_user_validation_company2_label'));
 		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
@@ -485,7 +485,6 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 			$additional_data = array(
 				'first_name' => $this->input->post('first_name'),
 				'last_name'  => $this->input->post('last_name'),
-				'company'    => $this->input->post('company'),
 				'company2'   => $this->input->post('company2'),
 				'phone'      => $this->input->post('phone'),
 			);
@@ -521,12 +520,7 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('email'),
 			);
-			$this->data['company'] = array(
-				'name'  => 'company',
-				'id'    => 'company',
-				'type'  => 'text',
-				'value' => $this->form_validation->set_value('company'),
-			);
+
 			$this->data['company2'] = array(
 				'name'  => 'company2',
 				'id'    => 'company2',
@@ -551,7 +545,7 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 				'type'  => 'password',
 				'value' => $this->form_validation->set_value('password_confirm'),
 			);
-
+			
 			$this->_render_page('auth/create_user', $this->data);
 		}
 	}
