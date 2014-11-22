@@ -14,7 +14,10 @@
 			</td>
 			<td><?php echo ($user->active) ? anchor("auth/deactivate/".$user->id, lang('deactivate_button')) : anchor("auth/activate/". $user->id, lang('index_inactive_link'));?></td>
 			<td><?php echo anchor("auth/edit_user/".$user->id, 'Edit') ;?></td>
-			<td><?php echo anchor("auth/edit_user/".$user->id, 'Apply to be a Candidate') ;?>
+			<td><?php echo anchor("election/apply/".$user->id, 'Apply to be a Candidate') ;?>
 			<td><?php echo anchor("election", 'View Elections') ;?></td>
+			<?php if ($is_admin):?>
+				<td><?php echo anchor("application", 'Applications') ;?></td>
+			<?php endif;?>
 		</tr>
 </table>

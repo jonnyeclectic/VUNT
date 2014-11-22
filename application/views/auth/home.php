@@ -1,14 +1,15 @@
+<font face="verdana" size ="50" color="rgb(255,255,255)">
 
+	
+		<?php echo anchor('home', lang('home_heading'));?>
 <table cellpadding=0 cellspacing=10>
-	<tr>
-		<th><h1><?php echo anchor('home', lang('home_heading'));?></h1></th>
-		
+	<tr><td>
 		<?php if (!$this->ion_auth->logged_in()):?>
-			<td><?php echo anchor('auth/login', lang('login_heading'))?></td>
+			<?php echo anchor('auth/login', lang('login_heading'))?>
 			<?php endif?>
 		<?php if($this->ion_auth->logged_in()):?>
-			<td><?php echo anchor('auth/logout', lang('login_logout'))?></td>
+			<?php echo anchor('auth/logout', lang('login_logout'))?>
 			<?php endif?>
-		<td><?php echo lang('home_subheading');?></td>
-	</tr>
-</table>
+		<?php echo lang('home_subheading');?>
+	</td></tr>
+</table></font>

@@ -1438,11 +1438,13 @@ class Ion_auth_model extends CI_Model
 		return $query->result();
 	}
 	
-	/*public function delete_user($user_id)
+	public function apply_for_candidacy($user_id)
 	{
 		$this->db->where('id', $user_id);
-		$this->db->delete('users');
-	}*/
+		$this->db->update('users', array('candidacy_request' => 0));
+		$this->db->insert('users_groups', array('user_id' => $user_id, 'group_id' => 4));
+	}
+	
 	public function validate_user($user_id)
 	{
 		$this->db->where('id', $user_id);
@@ -1452,12 +1454,50 @@ class Ion_auth_model extends CI_Model
 	{
 		$this->db->where('id', $user_id);
 		$this->db->update('users', array('candidacy_request' => 0));
+		$this->db->where('user_id', $user_id);
+		$this->db->where('group_id', 4);
+		$this->db->delete('users_groups');
 	}
 	public function make_candidate($user_id)
 	{
 		$this->db->insert('users', array('user_id' => $user_id, 'group_id' => 3));
 	}
-
+	public function is_candidate($user_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$query = $this->db->get('users_groups');
+		foreach($query->result() as $row)
+			if ($row->group_id == 3)
+				return TRUE;
+		return FALSE;
+	}
+	public function become_candidate($election_id, $user_id)
+	{
+		$id = 0;
+		$query = $this->db->get('candidates');
+			foreach($query->result() as $row)
+				$id = $row->$candidate_id;
+		$id++;
+		$candidate = array(
+			'id' => $id,
+			'user_id' => $user_id,
+			'election_id' => $election_id,
+			'candidate_id' => $id
+		);
+		$this->db->insert('candidates', $candidate);
+	}
+	
+	public function in_election($user_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$query = $this->db->get('candidates');
+		foreach($query->result() as $row)
+			$running[$row->election_id] = TRUE;
+		if (isset($running))
+			return $running;
+		else
+			return FALSE;
+	}
 	/**
 	 * users
 	 *

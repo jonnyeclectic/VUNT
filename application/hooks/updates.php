@@ -24,9 +24,10 @@ class Settings extends CI_Hooks {
 	<html>
 	</body>
 	</html>
+	
 	<bgcolor="yellow">
 	<!---<marquee>It's the best website in the world!</marquee>-->
-	<body background="http://pichost.me/1884479/"><img src = "http://pichost.me/1884479.jpg">
+	<body background="http://bestpaperz.com/data_images/out/17/8822358-plain-green-background.jpg">
 	<?php 
 	}
 }
