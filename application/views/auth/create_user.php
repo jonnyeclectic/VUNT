@@ -15,7 +15,6 @@
             <?php echo lang('create_user_lname_label', 'last_name');?> <br />
             <?php echo form_input($last_name);?>
       </p>
-      
       <select multiple = "multiple" name = "formColleges[]">
       <p>
       	<?php foreach($myDropdown as $dd)
@@ -49,14 +48,15 @@
       <p>
             <?php echo lang('create_user_password_confirm_label', 'password_confirm');?> <br />
             <?php echo form_input($password_confirm);?>
-  	  </p>
-  	  
-  	  <form>
-	  <input type="checkbox" name="checked" value="NULL">Apply To Be a Candidate
-	  </form>
-	  <?php echo form_hidden($checked);?>
+
+      </p></br>
+
 <?php echo form_submit('submit', lang('create_user_submit_btn'));
 echo form_close();
+
+
+
+
 ?>
 
 
