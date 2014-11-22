@@ -31,11 +31,7 @@ class Election extends CI_Controller {
 			}
 			else 
 			{
-<<<<<<< HEAD
-				$this->data['elections'] = $this->ion_auth->elections(explode(',', $this->ion_auth->user()->row()->college));	
-=======
-				$this->data['elections'] = $this->ion_auth->elections();//$this->ion_auth->user()->row()->$colleges);	
->>>>>>> origin/master
+				$this->data['elections'] = $this->ion_auth->elections(explode(',', $this->ion_auth->user()->row()->college));
 			}
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -53,6 +49,8 @@ class Election extends CI_Controller {
 				$i++;
 			}
 			$this->data['is_admin'] = $this->ion_auth->is_admin();
+			$this->data['is_candidate'] = $this->ion_auth->is_candidate($this->ion_auth->user()->row()->id);
+			$this->data['in_election'] = $this->ion_auth->in_election($this->ion_auth->user()->row()->id);
 			$this->_render_page('election/election_index', $this->data);
 		}
 	}
@@ -72,6 +70,12 @@ class Election extends CI_Controller {
 	{
 		$this->ion_auth->vote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		redirect('election/vote/'.$election_id, 'refresh');
+	}
+	
+	function become_candidate($election_id)
+	{
+		become_candidate($election_id, $this->ion_auth->user()->row()->id);
+		redirect('election');
 	}
 	
 	function create_election()
@@ -160,6 +164,12 @@ class Election extends CI_Controller {
 	{
 		$this->ion_auth->unvote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		redirect('election/vote/'.$election_id, 'refresh');
+	}
+	
+	function apply($user_id)
+	{
+		$this->ion_auth->apply_for_candidacy($user_id);
+		redirect('home');
 	}
 	
 	function _render_page($view, $data=null, $render=false)

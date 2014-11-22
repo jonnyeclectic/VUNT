@@ -32,7 +32,6 @@
        		 </p><?php
     		 echo("</p>");
 	  }?>
-<<<<<<< HEAD
 	  <p>  <!--College-->
             <?php echo lang('election_college_label', 'college');?> <br />
             <?php echo form_input($college);?>
@@ -54,9 +53,4 @@
       <p><?php echo form_submit('submit', lang('election_create_label'));?></p>
 
 <?php echo form_close();?>
-=======
 	  </p>
-	  
-<?php 
-echo form_close();?>
->>>>>>> origin/master

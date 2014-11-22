@@ -31,6 +31,9 @@
             <?php endif;?></td>,
             <td><?php if ($elections[$i]['status'] === 'active'):?>
             	<?php echo anchor('election/vote/'.$elections[$i]['id'], 'Vote Now!');?>
+            <?php endif;?>
+            <?php if ($is_candidate && !$in_election[$elections[$i]['id']]):?>
+            	<?php echo anchor('election/become_candidate/'.$elections[$i]['id'], 'Be a Candidate in This Election');?>
             <?php endif;?></td>
 		</tr>
 	<?php endfor;?>
