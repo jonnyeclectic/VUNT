@@ -122,12 +122,12 @@ class Migration_Install_ion_auth extends CI_Migration {
 				'constraint' => '50',
 				'null' => TRUE
 			),
-			'company' => array(
+			'college' => array(
 				'type' => 'VARCHAR',
 				'constraint' => '100',
 				'null' => TRUE
 			),
-			'phone' => array(
+			'EUID' => array(
 				'type' => 'VARCHAR',
 				'constraint' => '20',
 				'null' => TRUE
@@ -152,8 +152,8 @@ class Migration_Install_ion_auth extends CI_Migration {
 			'active' => '1',
 			'first_name' => 'Admin',
 			'last_name' => 'istrator',
-			'company' => 'ADMIN',
-			'phone' => '0',
+			'college' => 'ADMIN',
+			'EUID' => '0',
 		);
 		$this->db->insert('users', $data);
 

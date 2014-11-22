@@ -31,7 +31,11 @@ class Election extends CI_Controller {
 			}
 			else 
 			{
+<<<<<<< HEAD
 				$this->data['elections'] = $this->ion_auth->elections(explode(',', $this->ion_auth->user()->row()->college));	
+=======
+				$this->data['elections'] = $this->ion_auth->elections();//$this->ion_auth->user()->row()->$colleges);	
+>>>>>>> origin/master
 			}
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -86,11 +90,10 @@ class Election extends CI_Controller {
 		}
 
 		//validate form input
-		$this->form_validation->set_rules('name', $this->lang->line('create_group_validation_name_label'),'required');
-		$this->form_validation->set_rules('description', $this->lang->line('create_group_validation_desc_label'),'required|xss_clean');
-		$this->form_validation->set_rules('college', $this->lang->line('create_group_validation_desc_label'), 'xss_clean|required');
-		$this->form_validation->set_rules('start_time', $this->lang->line('create_group_validation_desc_label'), 'xss_clean|required|exact_length[19]');
-		$this->form_validation->set_rules('end_time', $this->lang->line('create_group_validation_desc_label'), 'xss_clean|required|exact_length[19]');
+		$this->form_validation->set_rules('name', $this->lang->line('election_name_label'),'required|is_unique[elections.name]');
+		$this->form_validation->set_rules('description', $this->lang->line('election_desc_label'),'required|xss_clean');
+		$this->form_validation->set_rules('start_time', $this->lang->line('election_start_time_label'), 'xss_clean|required|exact_length[19]');
+		$this->form_validation->set_rules('end_time', $this->lang->line('election_end_time_label'), 'xss_clean|required|exact_length[19]');
 
 		if ($this->form_validation->run() == TRUE)
 		{
@@ -104,7 +107,7 @@ class Election extends CI_Controller {
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
 				
 			}
-			redirect("elections", 'refresh');
+			redirect("election", 'refresh');
 		}
 		else
 		{

@@ -25,9 +25,8 @@
 	  <?php if(isset($_POST['formColleges'])){
   			 $aColleges = $_POST['formColleges'];?>
        		 <p>
-      		 <?php $company2 = implode(",", $aColleges);
-             echo lang('create_user_company_label', 'company2');
-             echo form_input('company2', $company2);?>
+      		 <?php $college = implode(",", $aColleges);
+             echo form_hidden('college', $college);?>
        		 </p><?php
     		 echo("</p>");
 	  }?>
@@ -37,8 +36,8 @@
       </p>
 
       <p>
-            <?php echo lang('create_user_phone_label', 'phone');?> <br />
-            <?php echo form_input($phone);?>
+            <?php echo lang('create_user_EUID_label', 'EUID');?> <br />
+            <?php echo form_input($EUID);?>
       </p>
 
       <p>
@@ -49,16 +48,14 @@
       <p>
             <?php echo lang('create_user_password_confirm_label', 'password_confirm');?> <br />
             <?php echo form_input($password_confirm);?>
-      </p>
-
-
-
-
+  	  </p>
+  	  
+  	  <form>
+	  <input type="checkbox" name="checked" value="NULL">Apply To Be a Candidate
+	  </form>
+	  <?php echo form_hidden($checked);?>
 <?php echo form_submit('submit', lang('create_user_submit_btn'));
-echo form_close();
-
-
-?>
+echo form_close();?>
 
 
 

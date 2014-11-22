@@ -148,15 +148,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `active` tinyint(1) unsigned DEFAULT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
-  `company` varchar(100) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL
+  `college` varchar(100) DEFAULT NULL,
+  `EUID varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `college`, `EUID`) VALUES
 (1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1416596607, 1, 'Admin', 'istrator', 'ADMIN', '0'),
 (2, '::1', 'chris fitch', '$2y$08$Xyq7UY/VZwlzt3zropvU0uc9viF08bfWXXxhOcuHb/P1J8WsyiLmi', NULL, 'zapheres@gmail.com', NULL, NULL, NULL, NULL, 1416592884, 1416592922, 1, 'Chris', 'Fitch', 'College of Engineering', 'ccf0056');
 
