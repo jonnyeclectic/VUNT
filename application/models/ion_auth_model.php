@@ -280,7 +280,6 @@ class Ion_auth_model extends CI_Model
 			return $this->bcrypt->hash($password);
 		}
 
-
 		if ($this->store_salt && $salt)
 		{
 			return  sha1($password . $salt);
@@ -1386,6 +1385,23 @@ class Ion_auth_model extends CI_Model
 		{
 			return $row->name;
 		}
+	}
+
+	public function change_status($election_id, $status)
+	{
+		$this->db->where('election_id', $election_id);
+		$status_change = array('status' => $status);
+		$query = $this->db->update('elections', $status_change);
+	}
+
+	public function winner($election_id)
+	{
+		/*$this->db->where('election_id', $election_id);
+		$this-
+		foreach ($query->result() as $row)
+		{
+			return $row->name;
+		}*/
 	}
 
 	/**
