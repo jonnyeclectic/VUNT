@@ -1492,8 +1492,10 @@ class Ion_auth_model extends CI_Model
 		$query = $this->db->get('candidates');
 		foreach($query->result() as $row)
 			$running[$row->election_id] = TRUE;
-		
-		return $running;
+		if (isset($running))
+			return $running;
+		else
+			return FALSE;
 	}
 	/**
 	 * users

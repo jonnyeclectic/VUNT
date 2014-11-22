@@ -24,7 +24,7 @@ class Home extends CI_Controller {
 			$this->data['user'] = $this->ion_auth->user()->row();
 			$this->data['user']->groups = $this->ion_auth->get_users_groups($this->data['user']->id)->result();
 			//list the users
-			
+			$this->data['is_admin'] = $this->ion_auth->is_admin($this->ion_auth->user()->row()->id);
 			$this->_render_page('auth/account', $this->data);
 		}
 	}
