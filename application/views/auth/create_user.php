@@ -15,6 +15,7 @@
             <?php echo lang('create_user_lname_label', 'last_name');?> <br />
             <?php echo form_input($last_name);?>
       </p>
+      
       <select multiple = "multiple" name = "formColleges[]">
       <p>
       	<?php foreach($myDropdown as $dd)
@@ -55,7 +56,8 @@
 	  </form>
 	  <?php echo form_hidden($checked);?>
 <?php echo form_submit('submit', lang('create_user_submit_btn'));
-echo form_close();?>
+echo form_close();
+?>
 
 
 

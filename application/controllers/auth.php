@@ -472,7 +472,7 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 			$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
 			$email    = strtolower($this->input->post('email'));
 			$password = $this->input->post('password');
-			$checked  = $this->input->post('remember');
+			$checked  = $this->input->post('checked');
 			//echo $checked;//$remember = (bool) $this->input->post('remember');
 
 			$additional_data = array(
