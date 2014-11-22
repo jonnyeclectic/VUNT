@@ -37,8 +37,8 @@
       </p>
 
       <p>
-            <?php echo lang('create_user_phone_label', 'phone');?> <br />
-            <?php echo form_input($phone);?>
+            <?php echo lang('create_user_EUID_label', 'EUID');?> <br />
+            <?php echo form_input($EUID);?>
       </p>
 
       <p>

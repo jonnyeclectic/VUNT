@@ -43,9 +43,9 @@ if(isset($_POST['formColleges']))
     }?>
        <p>
       		 <?php 
-      		 $company2 = implode(",", $aColleges);
-             echo lang('create_user_company_label', 'company2');
-            echo form_input('company2', $company2);?>
+      		 $college = implode(",", $aColleges);
+             echo lang('create_user_company_label', 'college');
+            echo form_input('college', $college);?>
       </p>   <?php
     
     echo("</p>");
@@ -54,8 +54,8 @@ if(isset($_POST['formColleges']))
 
 ?>
       <p>
-            <?php echo lang('edit_user_phone_label', 'phone');?> <br />
-            <?php echo form_input($phone);?>
+            <?php echo lang('edit_user_EUID_label', 'EUID');?> <br />
+            <?php echo form_input($EUID);?>
       </p>
 
       <p>

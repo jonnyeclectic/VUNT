@@ -462,9 +462,9 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 		$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique['.$tables['users'].'.email]');
-		$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('EUID', $this->lang->line('create_user_validation_EUID_label'), 'required|xss_clean');
 		//$this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'required|xss_clean');
-		$this->form_validation->set_rules('company2', $this->lang->line('create_user_validation_company2_label'));
+		$this->form_validation->set_rules('college', $this->lang->line('create_user_validation_college_label'));
 		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
@@ -477,8 +477,8 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 			$additional_data = array(
 				'first_name' => $this->input->post('first_name'),
 				'last_name'  => $this->input->post('last_name'),
-				'company2'   => $this->input->post('company2'),
-				'phone'      => $this->input->post('phone'),
+				'college'   => $this->input->post('college'),
+				'EUID'      => $this->input->post('EUID'),
 			);
 		}
 		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
@@ -513,17 +513,17 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 				'value' => $this->form_validation->set_value('email'),
 			);
 
-			$this->data['company2'] = array(
-				'name'  => 'company2',
-				'id'    => 'company2',
+			$this->data['college'] = array(
+				'name'  => 'college',
+				'id'    => 'college',
 				'type'  => 'text',
-				'value' => $this->form_validation->set_value('company2'),
+				'value' => $this->form_validation->set_value('college'),
 			);
-			$this->data['phone'] = array(
-				'name'  => 'phone',
-				'id'    => 'phone',
+			$this->data['EUID'] = array(
+				'name'  => 'EUID',
+				'id'    => 'EUID',
 				'type'  => 'text',
-				'value' => $this->form_validation->set_value('phone'),
+				'value' => $this->form_validation->set_value('EUID'),
 			);
 			$this->data['password'] = array(
 				'name'  => 'password',
@@ -565,9 +565,8 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 		//validate form input
 		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|xss_clean');
-		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'required|xss_clean');
-		//$this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'required|xss_clean');
-		$this->form_validation->set_rules('company2', $this->lang->line('edit_user_validation_company2_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('EUID', $this->lang->line('edit_user_validation_EUID_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('college', $this->lang->line('edit_user_validation_college_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
 
 		if (isset($_POST) && !empty($_POST))
@@ -591,8 +590,8 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 					'first_name' => $this->input->post('first_name'),
 					'last_name'  => $this->input->post('last_name'),
 					'company'    => $this->input->post('company'),
-					'company2'   => $this->input->post('company2'),
-					'phone'      => $this->input->post('phone'),
+					'college'   => $this->input->post('college'),
+					'EUID'      => $this->input->post('EUID'),
 				);
 
 				//update the password if it was posted
@@ -676,23 +675,17 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 			'type'  => 'text',
 			'value' => $this->form_validation->set_value('last_name', $user->last_name),
 		);
-		$this->data['company'] = array(
-			'name'  => 'company',
-			'id'    => 'company',
+		$this->data['college'] = array(
+			'name'  => 'college',
+			'id'    => 'college',
 			'type'  => 'text',
-			'value' => $this->form_validation->set_value('company', $user->company),
+			'value' => $this->form_validation->set_value('college', $user->college),
 		);
-		$this->data['company2'] = array(
-			'name'  => 'company2',
-			'id'    => 'company2',
+		$this->data['EUID'] = array(
+			'name'  => 'EUID',
+			'id'    => 'EUID',
 			'type'  => 'text',
-			'value' => $this->form_validation->set_value('company2', $user->company2),
-		);
-		$this->data['phone'] = array(
-			'name'  => 'phone',
-			'id'    => 'phone',
-			'type'  => 'text',
-			'value' => $this->form_validation->set_value('phone', $user->phone),
+			'value' => $this->form_validation->set_value('EUID', $user->EUID),
 		);
 		$this->data['password'] = array(
 			'name' => 'password',

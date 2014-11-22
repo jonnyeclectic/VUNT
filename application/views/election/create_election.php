@@ -13,25 +13,22 @@
             <?php echo form_input($description);?>
       </p>
       </p>
-      <select>
+      <select name = "formColleges[]">
       <p>
       	<?php foreach($myDropdown as $dd)
         echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>
+        <input type="submit" name="Submit" value="Submit">
 	  </p>
 	  </select>
 	  <?php if(isset($_POST['formColleges'])){
   			 $aColleges = $_POST['formColleges'];?>
-       		 <p>
-      		 <?php $company2 = implode(",", $aColleges);
-             echo lang('create_user_company_label', 'company2');
-             echo form_input('company2', $company2);?>
+       		 <p><!--College-->
+      		 <?php $colleges = implode(",", $aColleges);
+             echo lang('election_college_label', 'colleges');
+             echo form_input('colleges', $colleges);?>
        		 </p><?php
     		 echo("</p>");
 	  }?>
-	  <p>  <!--College-->
-            <?php echo lang('election_college_label', 'college');?> <br />
-            <?php echo form_input($college);?>
-      </p>
       <p>  <!--Start Time-->
             <?php echo lang('election_start_time_label', 'start_time');?> <br />
             <?php echo form_input($start_time);?>
