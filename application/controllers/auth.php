@@ -449,21 +449,7 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 
 	//create a new user
 	function create_user($title = "Create User")
-	{
-
-		$this->data['name'] = 'multi_dropdown';
-		$this->data['options'] = $this->db->list_fields('colleges');
-		$this->data['selected'] = array( 'General', 'College of Engineering');
-   		//foreach($options as $dd)
-		
-
-		$query = $this->db->field_data('colleges');
-		if($query)
-			{
-    			$this->data['myDropdown'] = $query;
-    			//$this->load->view('auth/dropdown', $this->data);
-			}
-			
+	{			
 		$tables = $this->config->item('tables','ion_auth');
 
 		//validate form input

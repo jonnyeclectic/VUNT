@@ -166,6 +166,7 @@ $lang['election_status_label'] 		= 'Status';
 $lang['election_winner_label'] 		= 'Winner';
 $lang['election_action_label']		= 'Action';
 $lang['election_create_label']		= 'Create an Election';
+$lang['election_create_subheading'] = 'Please enter the election information below.';
 
 // Voting
 $lang['voting_heading'] 	 = 'Candidates for ';

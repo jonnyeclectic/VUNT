@@ -1,6 +1,6 @@
 <div id="infoMessage"><?php echo $message;?></div>
 <h1><?php echo lang('election_heading');?></h1>
-<?php echo anchor('election/create', lang('election_create_label'))?>
+<?php echo anchor('election/create_election', lang('election_create_label'))?>
 <p><?php echo lang('election_subheading');?></p>
 
 <table cellpadding=0 cellspacing=10>
@@ -23,9 +23,11 @@
             <td><?php echo htmlspecialchars($elections[$i]['start_time'],ENT_QUOTES,'UTF-8');?></td>
             <td><?php echo htmlspecialchars($elections[$i]['end_time'],ENT_QUOTES,'UTF-8');?></td>
             <td><?php echo htmlspecialchars($elections[$i]['status'],ENT_QUOTES,'UTF-8');?></td>
-            <td><?php foreach ($winner[$i] as $victor):?>
+            <td><?php if ($elections[$i]['status'] === 'inactive'):?>
+            	<?php foreach ($winner[$i] as $victor):?>
             		<?php echo htmlspecialchars($victor,ENT_QUOTES,'UTF-8');?>
-            <?php endforeach;?></td>,
+            	<?php endforeach;?>
+            <?php endif;?></td>,
             <td><?php if ($elections[$i]['status'] === 'active'):?>
             	<?php echo anchor('election/vote/'.$elections[$i]['id'], 'Vote Now!');?>
             <?php endif;?></td>

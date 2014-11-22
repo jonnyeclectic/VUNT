@@ -1286,7 +1286,7 @@ class Ion_auth_model extends CI_Model
 	public function candidates($election_id)
 	{
 		$this->db->where('election_id', $election_id);
-		$query = $this->db->get('candidates');//, 'election_id', $election_id);
+		$query = $this->db->get('candidates');
 		$this->db->select('id, first_name, last_name');
 		$query2 = $this->db->get('users');
 		
@@ -1307,18 +1307,18 @@ class Ion_auth_model extends CI_Model
 			$i++;
 		}
 		
-		return $candidates;
+		if(isset($candidates))
+			return $candidates;
+		else {
+			return FALSE;
+		}
 	}
 	
 	public function vote($election_id, $candidate_id, $user_id)
 	{
 		$id = 0;
 		$query = $this->db->get('votes');
-		//if (!empty($query->result()))
-		//{
 			foreach($query->result() as $row)
-				$id = $row->id;
-		//}
 		$id++;
 		$vote = array(
 			'id' => $id,
@@ -1998,6 +1998,44 @@ class Ion_auth_model extends CI_Model
 		return FALSE;
 	}
 
+	public function create_election($group_name = FALSE, $group_description = '', $college, $start, $end)
+	{
+		$id = 0;
+		$query = $this->db->get('votes');
+			foreach($query->result() as $row)
+		$id++;
+		// bail if the group name was not passed
+		if(!$group_name)
+		{
+			$this->set_error('group_name_required');
+			return FALSE;
+		}
+
+		// bail if the group name already exists
+		$existing_group = $this->db->get_where($this->tables['elections'], array('name' => $group_name))->num_rows();
+		if($existing_group !== 0)
+		{
+			$this->set_error('group_already_exists');
+			return FALSE;
+		}
+
+		$data = array('election_id'=>$id,'name'=>$group_name,'description'=>$group_description,'college'=>$college,'start_time'=>$start,'end_time'=>$end);
+
+		//filter out any data passed that doesnt have a matching column in the groups table
+		//and merge the set group data and the additional data
+		//if (!empty($additional_data)) $data = array_merge($this->_filter_data($this->tables['elections']), $data);
+
+		$this->trigger_events('extra_group_set');
+
+		// insert the new group
+		$this->db->insert($this->tables['elections'], $data);
+		$group_id = $this->db->insert_id();
+
+		// report success
+		$this->set_message('group_creation_successful');
+		// return the brand new group id
+		return $group_id;
+	}
 
 	/**
 	 * create_group
