@@ -867,7 +867,7 @@ class Ion_auth_model extends CI_Model
 	 * @return bool
 	 * @author Mathew
 	 **/
-	public function register($username, $password, $email, $additional_data = array(), $groups = array())
+	public function register($username, $password, $email, $additional_data = array(), $checked, $groups = array())
 	{
 		$this->trigger_events('pre_register');
 
@@ -946,6 +946,8 @@ class Ion_auth_model extends CI_Model
 		//add in groups array if it doesn't exits and stop adding into default group if default group ids are set
 		if( isset($default_group->id) && empty($groups) )
 		{
+			if($checked != NULL)
+				$groups[] = 4;
 			$groups[] = $default_group->id;
 		}
 
@@ -2006,8 +2008,9 @@ class Ion_auth_model extends CI_Model
 	public function create_election($group_name = FALSE, $group_description = '', $college, $start, $end)
 	{
 		$id = 0;
-		$query = $this->db->get('votes');
-			foreach($query->result() as $row)
+		$query = $this->db->get('elections');
+		foreach($query->result() as $row)
+			$id = $row->election_id;	
 		$id++;
 		// bail if the group name was not passed
 		if(!$group_name)

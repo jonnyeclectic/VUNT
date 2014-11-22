@@ -44,8 +44,7 @@ if(isset($_POST['formColleges']))
        <p>
       		 <?php 
       		 $college = implode(",", $aColleges);
-             echo lang('create_user_company_label', 'college');
-            echo form_input('college', $college);?>
+             echo form_hidden('college', $college);?>
       </p>   <?php
     
     echo("</p>");

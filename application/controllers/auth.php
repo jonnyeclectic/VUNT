@@ -462,8 +462,7 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 		$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique['.$tables['users'].'.email]');
-		$this->form_validation->set_rules('EUID', $this->lang->line('create_user_validation_EUID_label'), 'required|xss_clean');
-		//$this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('EUID', $this->lang->line('create_user_validation_EUID1_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('college', $this->lang->line('create_user_validation_college_label'));
 		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
@@ -473,6 +472,8 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 			$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
 			$email    = strtolower($this->input->post('email'));
 			$password = $this->input->post('password');
+			$checked  = $this->input->post('remember');
+			//echo $checked;//$remember = (bool) $this->input->post('remember');
 
 			$additional_data = array(
 				'first_name' => $this->input->post('first_name'),
@@ -481,7 +482,7 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 				'EUID'      => $this->input->post('EUID'),
 			);
 		}
-		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
+		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $checked))
 		{
 			//check to see if we are creating the user
 			//redirect them back to the admin page
@@ -537,6 +538,12 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 				'type'  => 'password',
 				'value' => $this->form_validation->set_value('password_confirm'),
 			);
+			$this->data['checked']	=	array(
+				'name'  => 'checked',
+				'id'    => 'checked',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('checked'),
+			);
 			
 			$this->_render_page('auth/create_user', $this->data);
 		}
@@ -589,7 +596,6 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 				$data = array(
 					'first_name' => $this->input->post('first_name'),
 					'last_name'  => $this->input->post('last_name'),
-					'company'    => $this->input->post('company'),
 					'college'   => $this->input->post('college'),
 					'EUID'      => $this->input->post('EUID'),
 				);
@@ -619,7 +625,7 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 					}
 				}
 				
-			//check to see if we are updating the user
+			   //check to see if we are updating the user
 			   if($this->ion_auth->update($user->id, $data))
 			    {
 			    	//redirect them back to the admin page if admin, or to the base url if non admin
@@ -823,15 +829,6 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 		return array($key => $value);
 	}
 	
-	function account()
-	{
-		$this->data['title'] = $this->lang->line('edit_group_title');
-		echo "VIEWING PROFILE NOW..... [buttons for profile and voting]";
-		//$this->_render_page('home', $this->data);
-		$this->_render_page('account', $this->data);
-		
-	}
-
 	function _valid_csrf_nonce()
 	{
 		if ($this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&

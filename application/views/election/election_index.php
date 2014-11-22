@@ -24,7 +24,8 @@
             <td><?php echo htmlspecialchars($elections[$i]['end_time'],ENT_QUOTES,'UTF-8');?></td>
             <td><?php echo htmlspecialchars($elections[$i]['status'],ENT_QUOTES,'UTF-8');?></td>
             <td><?php if ($elections[$i]['status'] === 'inactive'):?>
-            	<?php foreach ($winner[$i] as $victor):?>
+            	<?php if(isset($winner[$i]))
+            	foreach ($winner[$i] as $victor):?>
             		<?php echo htmlspecialchars($victor,ENT_QUOTES,'UTF-8');?>
             	<?php endforeach;?>
             <?php endif;?></td>,
