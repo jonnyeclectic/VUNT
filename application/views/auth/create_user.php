@@ -49,8 +49,13 @@
             <?php echo lang('create_user_password_confirm_label', 'password_confirm');?> <br />
             <?php echo form_input($password_confirm);?>
 
-      </p></br>
 
+  	  </p>
+              </br>
+  	  <form>
+	  <input type="checkbox" name="checked" value="NULL">Apply To Be a Candidate
+	  </form>
+	  <?php echo form_hidden($checked);?>
 <?php echo form_submit('submit', lang('create_user_submit_btn'));
 echo form_close();
 
