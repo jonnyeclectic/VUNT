@@ -69,6 +69,12 @@ class Election extends CI_Controller {
 	
 	function create_election()
 	{
+		$query = $this->db->field_data('colleges');
+		if($query)
+		{
+    		$this->data['myDropdown'] = $query;
+		}
+		
 		$this->data['title'] = $this->lang->line('election_create_label');
 
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
@@ -77,12 +83,12 @@ class Election extends CI_Controller {
 		}
 
 		//validate form input
-		$this->form_validation->set_rules('name', $this->lang->line('create_group_validation_name_label'));
-		$this->form_validation->set_rules('description', $this->lang->line('create_group_validation_desc_label'), 'xss_clean');
-		$this->form_validation->set_rules('college', $this->lang->line('create_group_validation_desc_label'), 'xss_clean');
-		$this->form_validation->set_rules('start_time', $this->lang->line('create_group_validation_desc_label'), 'xss_clean');
-		$this->form_validation->set_rules('end_time', $this->lang->line('create_group_validation_desc_label'), 'xss_clean');
-		//$this->form_validation->set_rules('status', $this->lang->line('create_group_validation_desc_label'), 'xss_clean');
+		$this->form_validation->set_rules('name', $this->lang->line('create_group_validation_name_label'),'required');
+		$this->form_validation->set_rules('description', $this->lang->line('create_group_validation_desc_label'),'required|xss_clean');
+		$this->form_validation->set_rules('college', $this->lang->line('create_group_validation_desc_label'), 'xss_clean|required');
+		$this->form_validation->set_rules('start_time', $this->lang->line('create_group_validation_desc_label'), 'xss_clean|required|exact_length[19]');
+		$this->form_validation->set_rules('end_time', $this->lang->line('create_group_validation_desc_label'), 'xss_clean|required|exact_length[19]');
+
 		if ($this->form_validation->run() == TRUE)
 		{
 			//$this->
@@ -93,8 +99,9 @@ class Election extends CI_Controller {
 				// check to see if we are creating the group
 				// redirect them back to the admin page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect("auth", 'refresh');
+				
 			}
+			redirect("elections", 'refresh');
 		}
 		else
 		{

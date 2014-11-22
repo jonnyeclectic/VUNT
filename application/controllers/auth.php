@@ -449,7 +449,13 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 
 	//create a new user
 	function create_user($title = "Create User")
-	{			
+	{
+		$query = $this->db->field_data('colleges');
+		if($query)
+		{
+    		$this->data['myDropdown'] = $query;
+    		//$this->load->view('auth/dropdown', $this->data);
+		}
 		$tables = $this->config->item('tables','ion_auth');
 
 		//validate form input
@@ -540,11 +546,11 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 	function edit_user($id)
 	{
 		$query = $this->db->field_data('colleges');
-			if($query)
-			{
-    			$this->data['myDropdown'] = $query;
-    			//$this->load->view('auth/dropdown', $this->data);
-			}
+		if($query)
+		{
+    		$this->data['myDropdown'] = $query;
+    		//$this->load->view('auth/dropdown', $this->data);
+		}
 		$this->data['title'] = "Edit User";
 
 		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))

@@ -12,7 +12,23 @@
             <?php echo lang('election_description_label', 'description');?> <br />
             <?php echo form_input($description);?>
       </p>
-      <p>  <!--College-->
+      </p>
+      <select>
+      <p>
+      	<?php foreach($myDropdown as $dd)
+        echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>
+	  </p>
+	  </select>
+	  <?php if(isset($_POST['formColleges'])){
+  			 $aColleges = $_POST['formColleges'];?>
+       		 <p>
+      		 <?php $company2 = implode(",", $aColleges);
+             echo lang('create_user_company_label', 'company2');
+             echo form_input('company2', $company2);?>
+       		 </p><?php
+    		 echo("</p>");
+	  }?>
+	  <p>  <!--College-->
             <?php echo lang('election_college_label', 'college');?> <br />
             <?php echo form_input($college);?>
       </p>

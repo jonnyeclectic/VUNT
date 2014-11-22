@@ -22,38 +22,15 @@
         <input type="submit" name="Submit" value="Submit">
 	  </p>
 	  </select>
-	  <?php
- 
-if(isset($_POST['formColleges']))
-{
-  $aColleges = $_POST['formColleges'];
-   
-  if(!isset($aColleges))
-  {
-    echo("<p>You didn't select any colleges!</p>\n");
-  } 
-  else
-  {
-    $nColleges = count($aColleges);
-     
-   // echo("<p>You selected $nColleges colleges: ");
-    for($i=0; $i < $nColleges; $i++)
-    {
-      //echo($aColleges[$i] . " ");
-      
-    }?>
-       <p>
-      		 <?php 
-      		 $company2 = implode(",", $aColleges);
+	  <?php if(isset($_POST['formColleges'])){
+  			 $aColleges = $_POST['formColleges'];?>
+       		 <p>
+      		 <?php $company2 = implode(",", $aColleges);
              echo lang('create_user_company_label', 'company2');
-            echo form_input('company2', $company2);?>
-      </p>   <?php
-    
-    echo("</p>");
-  }
-}
-
-?>
+             echo form_input('company2', $company2);?>
+       		 </p><?php
+    		 echo("</p>");
+	  }?>
       <p>
             <?php echo lang('create_user_email_label', 'email');?> <br />
             <?php echo form_input($email);?>
