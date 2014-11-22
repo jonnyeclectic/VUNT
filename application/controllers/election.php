@@ -35,10 +35,18 @@ class Election extends CI_Controller {
 
 			//list the elections
 			$this->data['elections'] = $this->ion_auth->elections();
+			$i = 0;
+			foreach ($this->data['elections'] as $election)
+			{
+				if ($election['status'] === 'inactive')
+					$this->data['winner'][$i] = $this->ion_auth->winner($election['id']);
+				else
+					$this->data['winner'][$i] = NULL;
+				$i++;
+			}
 			$this->_render_page('election/election_index', $this->data);
 		}
 	}
-	
 	
 	
 	function vote($election_id)

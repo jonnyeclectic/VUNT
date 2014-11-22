@@ -163,6 +163,7 @@ $lang['election_college_label'] 	= 'College';
 $lang['election_start_time_label'] 	= 'Start Time';
 $lang['election_end_time_label'] 	= 'End Time';
 $lang['election_status_label'] 		= 'Status';
+$lang['election_winner_label'] 		= 'Winner';
 $lang['election_action_label']		= 'Action';
 
 // Voting

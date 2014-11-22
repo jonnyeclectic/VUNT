@@ -13,9 +13,7 @@ class Settings extends CI_Hooks {
 			else if ($election['end_time'] > $current_time && $election['status'] != 'active')
 				$CI->ion_auth->change_status($election['id'], 'active');
 			else if ($election['end_time'] < $current_time && $election['status'] != 'inactive')
-			{
 				$CI->ion_auth->change_status($election['id'], 'inactive');
-			}
 		}
     }
 }

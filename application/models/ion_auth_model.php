@@ -1396,12 +1396,26 @@ class Ion_auth_model extends CI_Model
 
 	public function winner($election_id)
 	{
-		/*$this->db->where('election_id', $election_id);
-		$this-
+		$this->db->where('election_id', $election_id);
+		$query = $this->db->get('candidates');
+		$winner = NULL;
+		$max_votes = 0;
 		foreach ($query->result() as $row)
 		{
-			return $row->name;
-		}*/
+			if($row->num_votes > $max_votes)
+				$max_votes = $row->num_votes;
+		}
+		foreach ($query->result() as $row)
+		{
+			if ($row->num_votes === $max_votes)
+			{
+				$this->db->where('id', $row->candidate_id);
+				$query2 = $this->db->get('users');
+				foreach ($query2->result() as $row2)
+					$winner[$row->candidate_id] = $row2->first_name.' '.$row2->last_name;
+			}
+		}
+		return $winner;
 	}
 
 	/**

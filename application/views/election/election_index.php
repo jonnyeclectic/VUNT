@@ -10,6 +10,7 @@
 		<th><?php echo lang('election_start_time_label');?></th>
 		<th><?php echo lang('election_end_time_label');?></th>
 		<th><?php echo lang('election_status_label');?></th>
+		<th><?php echo lang('election_winner_label');?></th>
 		<th><?php echo lang('election_action_label');?></th>
 	</tr>
 	<?php for ($i = 0; isset($elections[$i]); $i++):?>
@@ -20,6 +21,9 @@
             <td><?php echo htmlspecialchars($elections[$i]['start_time'],ENT_QUOTES,'UTF-8');?></td>
             <td><?php echo htmlspecialchars($elections[$i]['end_time'],ENT_QUOTES,'UTF-8');?></td>
             <td><?php echo htmlspecialchars($elections[$i]['status'],ENT_QUOTES,'UTF-8');?></td>
+            <td><?php foreach ($winner[$i] as $victor):?>
+            		<?php echo htmlspecialchars($victor,ENT_QUOTES,'UTF-8');?>
+            <?php endforeach;?></td>,
             <td><?php if ($elections[$i]['status'] === 'active'):?>
             	<?php echo anchor('election/vote/'.$elections[$i]['id'], 'Vote Now!');?>
             <?php endif;?></td>
