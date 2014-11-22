@@ -13,7 +13,7 @@
 		<tr>
             <td><?php echo htmlspecialchars($row->first_name.' '.$row->last_name,ENT_QUOTES,'UTF-8');?></td>
             <td><?php echo htmlspecialchars($row->college,ENT_QUOTES,'UTF-8');?></td>
-            <td><?php echo htmlspecialchars($row->euid,ENT_QUOTES,'UTF-8');?></td>
+            <td><?php echo htmlspecialchars($row->EUID,ENT_QUOTES,'UTF-8');?></td>
             <td><?php echo anchor('application/validation_state/'.$row->id.'/'.'1', 'Validate');?><br>
             <?php echo anchor('application/validation_state/'.$row->id.'/'.'0', 'Deny');?></td>
 		</tr>
@@ -34,7 +34,7 @@
 		<tr>
             <td><?php echo htmlspecialchars($row->first_name.' '.$row->last_name,ENT_QUOTES,'UTF-8');?></td>
             <td><?php echo htmlspecialchars($row->college,ENT_QUOTES,'UTF-8');?></td>
-            <td><?php echo htmlspecialchars($row->euid,ENT_QUOTES,'UTF-8');?></td>
+            <td><?php echo htmlspecialchars($row->EUID,ENT_QUOTES,'UTF-8');?></td>
             <td><?php echo anchor('application/candidacy_state/'.$row->id.'/'.'1', 'Approve');?><br>
             	<?php echo anchor('application/candidacy_state/'.$row->id.'/'.'0', 'Deny');?></td>
 		</tr>

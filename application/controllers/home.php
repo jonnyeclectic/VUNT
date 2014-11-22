@@ -1,6 +1,6 @@
 <?php 
 include 'application\controllers\auth.php';
-
+// Home page, really serving more of a placeholder function, but displays many options.
 class Home extends CI_Controller {
 	
 	public function __construct(){
@@ -14,7 +14,8 @@ class Home extends CI_Controller {
 		$this->lang->load('auth');
 		$this->load->view('auth/home');
 	}
-
+	// Gathers together all information and sends it to the view, so the user sees only certain 
+	// options on the home page and their own specific data.
 	public function index(){
 		$this->data['title'] = "Home";
 		if (!$this->ion_auth->logged_in())
@@ -25,6 +26,8 @@ class Home extends CI_Controller {
 			$this->data['user']->groups = $this->ion_auth->get_users_groups($this->data['user']->id)->result();
 			//list the users
 			$this->data['is_admin'] = $this->ion_auth->is_admin($this->ion_auth->user()->row()->id);
+			$this->data['is_pending'] = $this->ion_auth->is_pending($this->ion_auth->user()->row()->id);
+			$this->data['is_candidate'] = $this->ion_auth->is_candidate($this->ion_auth->user()->row()->id);
 			$this->_render_page('auth/account', $this->data);
 		}
 	}

@@ -945,8 +945,12 @@ class Ion_auth_model extends CI_Model
 		//add in groups array if it doesn't exits and stop adding into default group if default group ids are set
 		if( isset($default_group->id) && empty($groups) )
 		{
-			if($checked != NULL) 	 
-				$groups[] = 4;		
+			if($checked != NULL)
+			{
+				$groups[] = 4;
+				$this->db->where('username', $username);
+				$this->db->update('users', array('candidacy_request' => 1));	
+			}
 			
 			$groups[] = $default_group->id;
 		}
@@ -983,7 +987,7 @@ class Ion_auth_model extends CI_Model
 
 		$this->trigger_events('extra_where');
 
-		$query = $this->db->select($this->identity_column . ', username, email, id, password, active, last_login')
+		$query = $this->db->select($this->identity_column . ', username, email, id, password, active, last_login, valid_user')
 		                  ->where($this->identity_column, $identity)
 		                  ->limit(1)
 		    			  ->order_by('id', 'desc')
@@ -1008,7 +1012,7 @@ class Ion_auth_model extends CI_Model
 
 			if ($password === TRUE)
 			{
-				if ($user->active == 0)
+				if ($user->active == 0 || $user->valid_user == 0)
 				{
 					$this->trigger_events('post_login_unsuccessful');
 					$this->set_error('login_unsuccessful_not_active');
@@ -1261,6 +1265,7 @@ class Ion_auth_model extends CI_Model
 		return $result;
 	}
 	
+	// elections returns all elections either within or without a specific college
 	public function elections($colleges = NULL)
 	{
 		if (isset($colleges))
@@ -1290,6 +1295,7 @@ class Ion_auth_model extends CI_Model
 			return NULL;
 	}
 	
+	// candidates returns all candidates within an election
 	public function candidates($election_id)
 	{
 		$this->db->where('election_id', $election_id);
@@ -1317,10 +1323,13 @@ class Ion_auth_model extends CI_Model
 		if(isset($candidates))
 			return $candidates;
 		else {
-			return FALSE;
+			return NULL;
 		}
 	}
 	
+	// vote takes information enough to make a data entry in the "votes" table 
+	//for someone who has voted while simultaneously leaving the num_votes of
+	// a certain candidate one vote higher.
 	public function vote($election_id, $candidate_id, $user_id)
 	{
 		$id = 0;
@@ -1349,6 +1358,7 @@ class Ion_auth_model extends CI_Model
 		$this->db->update('candidates', $update);
 	}
 	
+	// Undoes everything the vote function does.
 	public function unvote($election_id, $candidate_id, $user_id)
 	{
 		$removing = array(
@@ -1372,6 +1382,9 @@ class Ion_auth_model extends CI_Model
 		$this->db->update('candidates', $update);
 	}
 	
+	// checks that a user with $user_id hasn't previously
+	// voted for an election with $election_id, to make sure
+	// each person only gets one vote per election.
 	public function voted($user_id, $election_id)
 	{
 		$this->db->where('election_id', $election_id);
@@ -1383,6 +1396,7 @@ class Ion_auth_model extends CI_Model
 		return NULL;
 	}
 	
+	// Returns the name of the election with election id = $election_id.
 	public function name_election($election_id)
 	{
 		$this->db->select('election_id, name');
@@ -1394,6 +1408,7 @@ class Ion_auth_model extends CI_Model
 		}
 	}
 
+	// changes the status value of an election
 	public function change_status($election_id, $status)
 	{
 		$this->db->where('election_id', $election_id);
@@ -1401,6 +1416,9 @@ class Ion_auth_model extends CI_Model
 		$query = $this->db->update('elections', $status_change);
 	}
 
+	// Goes through the candidates of an election and determines who has the most votes,
+	// thereafter returning that person's name, or in the event of a tie, all the people's
+	// names.
 	public function winner($election_id)
 	{
 		$this->db->where('election_id', $election_id);
@@ -1425,31 +1443,35 @@ class Ion_auth_model extends CI_Model
 		return $winner;
 	}
 	
+	// Array of users waiting to be accepted as voters
 	public function pending_users()
 	{
 		$this->db->where('valid_user', 0);
 		$query = $this->db->get('users');
 		return $query->result();
 	}
+	// Array of users waiting to be accepted as candidates
 	public function pending_candidates()
 	{
 		$this->db->where('candidacy_request', 1);
 		$query = $this->db->get('users');
 		return $query->result();
 	}
-	
+	// Sends an application for candidacy into the system based on
+	// $user_id.
 	public function apply_for_candidacy($user_id)
 	{
 		$this->db->where('id', $user_id);
-		$this->db->update('users', array('candidacy_request' => 0));
+		$this->db->update('users', array('candidacy_request' => 1));
 		$this->db->insert('users_groups', array('user_id' => $user_id, 'group_id' => 4));
 	}
-	
+	// Validates a user's login information so they may log in.
 	public function validate_user($user_id)
 	{
 		$this->db->where('id', $user_id);
 		$this->db->update('users', array('valid_user' => 1));
 	}
+	// Destroys a candidacy request by a user.
 	public function clear_candidacy_request($user_id)
 	{
 		$this->db->where('id', $user_id);
@@ -1458,10 +1480,12 @@ class Ion_auth_model extends CI_Model
 		$this->db->where('group_id', 4);
 		$this->db->delete('users_groups');
 	}
+	// Makes a user a candidate by adding them to the candidate user's group.
 	public function make_candidate($user_id)
 	{
-		$this->db->insert('users', array('user_id' => $user_id, 'group_id' => 3));
+		$this->db->insert('users_groups', array('user_id' => $user_id, 'group_id' => 3));
 	}
+	// Takes a user's id and returns TRUE if they are a candidate, FALSE otherwise.
 	public function is_candidate($user_id)
 	{
 		$this->db->where('user_id', $user_id);
@@ -1471,15 +1495,27 @@ class Ion_auth_model extends CI_Model
 				return TRUE;
 		return FALSE;
 	}
+	// Takes a user's id and returns TRUE if they are waiting to become a candidate, FALSE otherwise.
+	public function is_pending($user_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$query = $this->db->get('users_groups');
+		foreach($query->result() as $row)
+			if ($row->group_id == 4)
+				return TRUE;
+		return FALSE;
+	}
+	// Makes someone, who already has candidate permissions, a candidate in a specific election.
 	public function become_candidate($election_id, $user_id)
 	{
 		$id = 0;
 		$query = $this->db->get('candidates');
+		if ($query->num_rows() > 0)
 			foreach($query->result() as $row)
 				$id = $row->$candidate_id;
 		$id++;
 		$candidate = array(
-			'id' => $id,
+			'num_votes' => 0,
 			'user_id' => $user_id,
 			'election_id' => $election_id,
 			'candidate_id' => $id
@@ -1487,6 +1523,8 @@ class Ion_auth_model extends CI_Model
 		$this->db->insert('candidates', $candidate);
 	}
 	
+	// Returns a list of which elections a user is and isn't running in based
+	// on their $user_id.
 	public function in_election($user_id)
 	{
 		$this->db->where('user_id', $user_id);

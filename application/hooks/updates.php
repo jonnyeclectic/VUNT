@@ -1,5 +1,9 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+// This hook both makes the HTML for all pages look better than the default
+// white-on-black, whilst also playing an important role in the system by
+// constantly updating the status of each election based on start and 
+// end time. It should be noted that a one number representation of total
+// time is used throughout the comparisons here.
 class Settings extends CI_Hooks {
 
     public function update_status() {
@@ -9,13 +13,18 @@ class Settings extends CI_Hooks {
 		if(isset($elections))
 		foreach ($elections as $election)
 		{
+			// If we are before starting time the election is pending.
 			if (strtotime($election['start_time']) > $current_time)
 				$CI->ion_auth->change_status($election['id'], 'pending');
+			// If we are before ending time but not pending the election 
+			// is active.
 			else if (strtotime($election['end_time']) >= $current_time)
 				$CI->ion_auth->change_status($election['id'], 'active');
+			// If we are after end time, the election is inactive.
 			else if (strtotime($election['end_time']) < $current_time)
 				$CI->ion_auth->change_status($election['id'], 'inactive');
 		}
+		// Applies HTML
 		$this->pretty();
     }
 	
