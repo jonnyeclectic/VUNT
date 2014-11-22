@@ -16,5 +16,17 @@ class Settings extends CI_Hooks {
 			else if (strtotime($election['end_time']) < $current_time)
 				$CI->ion_auth->change_status($election['id'], 'inactive');
 		}
+		$this->pretty();
     }
+	
+	public function pretty(){
+	?><title>VUNT</title>
+	<html>
+	</body>
+	</html>
+	<bgcolor="yellow">
+	<!---<marquee>It's the best website in the world!</marquee>-->
+	<body background="http://pichost.me/1884479/"><img src = "http://pichost.me/1884479.jpg">
+	<?php 
+	}
 }

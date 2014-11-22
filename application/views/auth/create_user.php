@@ -15,21 +15,6 @@
             <?php echo lang('create_user_lname_label', 'last_name');?> <br />
             <?php echo form_input($last_name);?>
       </p>
-      <select multiple = "multiple" name = "formColleges[]">
-      <p>
-      	<?php foreach($myDropdown as $dd)
-        echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>
-        <input type="submit" name="Submit" value="Submit">
-	  </p>
-	  </select>
-	  <?php if(isset($_POST['formColleges'])){
-  			 $aColleges = $_POST['formColleges'];?>
-       		 <p>
-      		 <?php $college = implode(",", $aColleges);
-             echo form_hidden('college', $college);?>
-       		 </p><?php
-    		 echo("</p>");
-	  }?>
       <p>
             <?php echo lang('create_user_email_label', 'email');?> <br />
             <?php echo form_input($email);?>
@@ -50,19 +35,14 @@
             <?php echo form_input($password_confirm);?>
 
 
-  	  </p>
-              </br>
-  	  <form>
-	  <input type="checkbox" name="checked" value="NULL">Apply To Be a Candidate
-	  </form>
-	  <?php echo form_hidden($checked);?>
-<?php echo form_submit('submit', lang('create_user_submit_btn'));
-echo form_close();
-
-
-
-
-?>
+  	  </p>             
+      </br>
+  	  <form><select multiple = "multiple" id = "submit" name = "college" onchange="this.form.submit();"><p>
+      <?php foreach($myDropdown as $dd)
+      echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>
+	  </p><input type="submit" name="submit" value="Create"></select></form>
+<?php //echo form_submit('submit', lang('create_user_submit_btn'));
+echo form_close();?>
 
 
 

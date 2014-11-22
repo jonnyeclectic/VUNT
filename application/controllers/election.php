@@ -31,11 +31,8 @@ class Election extends CI_Controller {
 			}
 			else 
 			{
-<<<<<<< HEAD
 				$this->data['elections'] = $this->ion_auth->elections(explode(',', $this->ion_auth->user()->row()->college));	
-=======
-				$this->data['elections'] = $this->ion_auth->elections();//$this->ion_auth->user()->row()->$colleges);	
->>>>>>> origin/master
+
 			}
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -97,15 +94,13 @@ class Election extends CI_Controller {
 
 		if ($this->form_validation->run() == TRUE)
 		{
-			//$this->
+
 			$new_election_id = $this->ion_auth->create_election($this->input->post('name'),$this->input->post('description'),$this->input->post('college'),$this->input->post('start_time'),$this->input->post('end_time'));
-			//$new_election_id = $this->ion_auth->create_group($this->input->post('elections'), $this->input->post('description'));
 			if($new_election_id)
 			{
 				// check to see if we are creating the group
 				// redirect them back to the admin page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				
 			}
 			redirect("election", 'refresh');
 		}
@@ -145,12 +140,6 @@ class Election extends CI_Controller {
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('end_time'),
 			);
-			/*$this->data['status'] = array( 
-				'name'  => 'status',
-				'id'    => 'status',
-				'type'  => 'text',
-				'value' => $this->form_validation->set_value('status'),
-			);*/
 			
 			$this->_render_page('election/create_election', $this->data);
 		}

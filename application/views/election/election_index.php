@@ -28,8 +28,8 @@
             	foreach ($winner[$i] as $victor):?>
             		<?php echo htmlspecialchars($victor,ENT_QUOTES,'UTF-8');?>
             	<?php endforeach;?>
-            <?php endif;?></td>,
-            <td><?php if ($elections[$i]['status'] === 'active'):?>
+            <?php endif;?></td>
+            <td><?php if ($elections[$i]['candidates'] = NULL && $elections[$i]['status'] === 'active'):?>
             	<?php echo anchor('election/vote/'.$elections[$i]['id'], 'Vote Now!');?>
             <?php endif;?></td>
 		</tr>

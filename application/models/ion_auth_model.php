@@ -945,8 +945,9 @@ class Ion_auth_model extends CI_Model
 		//add in groups array if it doesn't exits and stop adding into default group if default group ids are set
 		if( isset($default_group->id) && empty($groups) )
 		{
-			if($checked != NULL)
-				$groups[] = 4;
+			if($checked != NULL) 	 
+				$groups[] = 4;		
+			
 			$groups[] = $default_group->id;
 		}
 
