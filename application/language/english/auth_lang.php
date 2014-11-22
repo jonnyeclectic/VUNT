@@ -174,3 +174,17 @@ $lang['voting_subheading'] 	 = 'Below are the candidates for this election.';
 $lang['voting_name_label'] 	 = 'Name';
 $lang['voting_votes_label']  = 'Votes';
 $lang['voting_action_label'] = 'Action';
+
+// Applications
+$lang['application_user_heading'] 			= 'Applications for Usership';
+$lang['application_user_subheading']    	= 'Below are the applications for those wanting to become users.';
+$lang['application_user_name_label']    	= 'Name';
+$lang['application_user_college_label'] 	= 'College';
+$lang['application_user_euid_label'] 		= 'EUID';
+$lang['application_user_action_label']  	= 'Action';
+$lang['application_candidate_heading'] 	    = 'Applications for Candidacy';
+$lang['application_candidate_subheading']   = 'Below are the applications for those wanting to become candidates.';
+$lang['application_candidate_name_label']   = 'Name';
+$lang['application_candidate_college_label']= 'College';
+$lang['application_candidate_euid_label'] 	= 'EUID';
+$lang['application_candidate_action_label'] = 'Action';

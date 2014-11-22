@@ -34,7 +34,7 @@
       </p>
       <p>  <!--Start Time-->
             <?php echo lang('election_start_time_label', 'start_time');?> <br />
-            <?php echo form_input($start_time);?>
+            <?php echo form_input($start_time, 'YYYY-MM-DD HH:MM:SS');?>
       </p>
       <p>  <!--End Time-->
             <?php echo lang('election_end_time_label', 'end_time');?> <br />

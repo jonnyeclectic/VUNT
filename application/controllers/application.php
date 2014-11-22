@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Election extends CI_Controller {
+class Application extends CI_Controller {
 	
 	function __construct()
 	{
@@ -17,6 +17,51 @@ class Election extends CI_Controller {
 	
 	function index()
 	{
-		
+		if (!$this->ion_auth->logged_in())
+		{
+			//redirect them to the login page
+			redirect('auth/login', 'refresh');
+		}
+		elseif (!$this->ion_auth->is_admin()) //remove this elseif if you want to enable this for non-admins
+		{
+			//redirect them to the home page because they must be an administrator to view this
+			redirect('home', 'refresh');
+			//return show_error('You must be an administrator to view this page.');
+		}
+		else
+		{
+			//set the flash data error message if there is one
+			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+			//list the users
+			$this->data['pending_users'] = $this->ion_auth->pending_users();
+			$this->data['pending_candidates'] = $this->ion_auth->pending_candidates();
+
+			$this->_render_page('application/application_index', $this->data);
+		}
+	}
+
+	function validation_state($user_id, $switch)
+	{
+		if ($switch == 0)
+			$this->ion_auth->delete_user($user_id);
+		if ($switch == 1)
+			$this->ion_auth->validate_user($user_id);
+		redirect('application');
+	}
+	
+	function candidacy_state($user_id, $switch)
+	{
+		$this->ion_auth->clear_candidacy_request($user_id);
+		if ($switch == 1)
+			$this->ion_auth->make_candidate($user_id);
+		redirect('application');
+	}
+
+	function _render_page($view, $data=null, $render=false)
+	{
+		$this->viewdata = (empty($data)) ? $this->data: $data;
+		$view_html = $this->load->view($view, $this->viewdata, $render);
+		if (!$render) return $view_html;
 	}
 }

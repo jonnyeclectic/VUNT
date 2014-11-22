@@ -564,7 +564,6 @@ class Ion_auth_model extends CI_Model
 
 			return TRUE;
 		}
-
 		return FALSE;
 	}
 
@@ -1421,6 +1420,39 @@ class Ion_auth_model extends CI_Model
 			}
 		}
 		return $winner;
+	}
+	
+	public function pending_users()
+	{
+		$this->db->where('valid_user', 0);
+		$query = $this->db->get('users');
+		return $query->result();
+	}
+	public function pending_candidates()
+	{
+		$this->db->where('candidacy_request', 1);
+		$query = $this->db->get('users');
+		return $query->result();
+	}
+	
+	/*public function delete_user($user_id)
+	{
+		$this->db->where('id', $user_id);
+		$this->db->delete('users');
+	}*/
+	public function validate_user($user_id)
+	{
+		$this->db->where('id', $user_id);
+		$this->db->update('users', array('valid_user' => 1));
+	}
+	public function clear_candidacy_request($user_id)
+	{
+		$this->db->where('id', $user_id);
+		$this->db->update('users', array('candidacy_request' => 0));
+	}
+	public function make_candidate($user_id)
+	{
+		$this->db->insert('users', array('user_id' => $user_id, 'group_id' => 3));
 	}
 
 	/**

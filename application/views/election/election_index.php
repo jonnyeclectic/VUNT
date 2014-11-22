@@ -1,6 +1,6 @@
 <div id="infoMessage"><?php echo $message;?></div>
 <h1><?php echo lang('election_heading');?></h1>
-<?php echo anchor('election/create_election', lang('election_create_label'))?>
+<?php if ($is_admin) {echo anchor('election/create_election', lang('election_create_label'));}?>
 <p><?php echo lang('election_subheading');?></p>
 <?php if(isset($elections)):?>
 <table cellpadding=0 cellspacing=10>
