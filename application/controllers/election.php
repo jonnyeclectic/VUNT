@@ -26,7 +26,7 @@ class Election extends CI_Controller {
 		}
 		else
 		{
-			if (!$this->ion_auth->is_admin())
+			if ($this->ion_auth->is_admin())
 			{
 				// If an admin, view all elections.
 				$this->data['elections'] = $this->ion_auth->elections();
