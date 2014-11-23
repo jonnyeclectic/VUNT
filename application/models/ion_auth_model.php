@@ -1292,6 +1292,7 @@ class Ion_auth_model extends CI_Model
 	
 	public function candidates($election_id)
 	{
+		echo "HELLO WORKING";
 		$this->db->where('election_id', $election_id);
 		$query = $this->db->get('candidates');
 		$this->db->select('id, first_name, last_name');
@@ -1306,6 +1307,7 @@ class Ion_auth_model extends CI_Model
 				{
 					$candidates[$i]['first_name'] = $user->first_name;
 					$candidates[$i]['last_name'] = $user->last_name;
+					echo $candidates[$i]['first_name']."<br";
 				}
 			}
 			$candidates[$i]['candidate_id'] = $row->candidate_id;

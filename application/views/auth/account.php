@@ -2,7 +2,7 @@
 <h1><?php echo htmlspecialchars($user->first_name,ENT_QUOTES,'UTF-8'). " " .htmlspecialchars($user->last_name,ENT_QUOTES,'UTF-8');?></h1>
 
 
-<table cellpadding=0 cellspacing=10>
+<table cellpadding=0 cellspacing=10>								<!-- Formatting -->
 	<tr>
 		<th><?php echo lang('index_groups_th');?></th>
 	</tr>
@@ -13,10 +13,10 @@
                 <?php endforeach?>
 			</td>
 			<td><?php echo ($user->active) ? anchor("auth/deactivate/".$user->id, lang('deactivate_button')) : anchor("auth/activate/". $user->id, lang('index_inactive_link'));?></td>
-			<td><?php echo anchor("auth/edit_user/".$user->id, 'Edit') ;?></td>
+			<td><?php echo anchor("auth/edit_user/".$user->id, 'Edit') ;?></td>					<!-- These are buttons for the home page-->
 			<td><?php echo anchor("election/apply/".$user->id, 'Apply to be a Candidate') ;?>
 			<td><?php echo anchor("election", 'View Elections') ;?></td>
-			<?php if ($is_admin):?>
+			<?php if ($is_admin):?>												<!-- These are buttons for the administrator-->
 				<td><?php echo anchor("application", 'Applications') ;?></td>
 			<?php endif;?>
 		</tr>

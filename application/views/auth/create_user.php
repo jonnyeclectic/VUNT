@@ -36,12 +36,24 @@
 
 
   	  </p>             
-      </br>
-  	  <form><select multiple = "multiple" id = "submit" name = "college" onchange="this.form.submit();"><p>
-      <?php foreach($myDropdown as $dd)
-      echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>
-	  </p><input type="submit" name="submit" value="Create"></select></form>
-<?php //echo form_submit('submit', lang('create_user_submit_btn'));
+      </br>
+      <input type="checkbox" name="checked" value="NULL">Apply To Be a Candidate
+	  <?php echo form_hidden($checked);?>
+      <p><?php //echo form_submit('submit', lang('edit_user_submit_btn'));?></p>
+  	  <form><select multiple = "multiple" name = "college[]" ><p> <!-- Save User's input when things are selected-->
+      <?php foreach($myDropdown as $dd)										// --Dropdown menu--
+      echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>	 <!-- Display colleges in list-->
+	  </p><input type="submit" name="submit" value="Create"></select> <form><!-- Save User's input-->
+	  <?php 
+if(isset($_POST['college']))
+{
+  //$aColleges = $_POST['college'];
+     $college = implode(',',$_POST['college']);
+	 //echo $college;
+	echo form_hidden($college);
+	//echo $college;//form_hidden($college);
+}
+
 echo form_close();?>
 
 

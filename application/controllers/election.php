@@ -31,12 +31,7 @@ class Election extends CI_Controller {
 			}
 			else 
 			{
-<<<<<<< HEAD
 				$this->data['elections'] = $this->ion_auth->elections(explode(',', $this->ion_auth->user()->row()->college));	
-
-=======
-				$this->data['elections'] = $this->ion_auth->elections(explode(',', $this->ion_auth->user()->row()->college));
->>>>>>> cffa91f5bdf971dd412618525adc370ccb3ffad9
 			}
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
