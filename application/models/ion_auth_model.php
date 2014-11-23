@@ -1309,16 +1309,21 @@ class Ion_auth_model extends CI_Model
 		{
 			foreach ($query2->result() as $user)
 			{
-				if ($user->id == $row->candidate_id)
+				if ($user->id == $row->user_id)
 				{
+<<<<<<< HEAD
 					$candidates[$i]['first_name'] = $user->first_name;
 					$candidates[$i]['last_name'] = $user->last_name;
 					echo $candidates[$i]['first_name']."<br";
+=======
+					$candidates[$row->user_id]['first_name'] = $user->first_name;
+					$candidates[$row->user_id]['last_name'] = $user->last_name;
+>>>>>>> 28265100fe7016f1316b538041168968da8c5e6c
 				}
 			}
-			$candidates[$i]['candidate_id'] = $row->candidate_id;
-			$candidates[$i]['election_id'] = $row->election_id;
-			$candidates[$i]['num_votes'] = $row->num_votes;
+			$candidates[$row->user_id]['candidate_id'] = $row->user_id;
+			$candidates[$row->user_id]['election_id'] = $row->election_id;
+			$candidates[$row->user_id]['num_votes'] = $row->num_votes;
 			$i++;
 		}
 		
@@ -1347,7 +1352,7 @@ class Ion_auth_model extends CI_Model
 		$this->db->insert('votes', $vote);
 		
 		$this->db->where('election_id', $election_id);
-		$this->db->where('candidate_id', $candidate_id);
+		$this->db->where('user_id', $candidate_id);
 		$query = $this->db->get('candidates');
 		foreach($query->result() as $row)
 		{
@@ -1356,7 +1361,7 @@ class Ion_auth_model extends CI_Model
 		$num_votes++;
 		$update = array('num_votes' => $num_votes);
 		$this->db->where('election_id', $election_id);
-		$this->db->where('candidate_id', $candidate_id);
+		$this->db->where('user_id', $candidate_id);
 		$this->db->update('candidates', $update);
 	}
 	
@@ -1371,7 +1376,7 @@ class Ion_auth_model extends CI_Model
 		$this->db->delete('votes', $removing);
 		
 		$this->db->where('election_id', $election_id);
-		$this->db->where('candidate_id', $candidate_id);
+		$this->db->where('user_id', $candidate_id);
 		$query = $this->db->get('candidates');
 		foreach($query->result() as $row)
 		{
@@ -1380,7 +1385,7 @@ class Ion_auth_model extends CI_Model
 		$num_votes--;
 		$update = array('num_votes' => $num_votes);
 		$this->db->where('election_id', $election_id);
-		$this->db->where('candidate_id', $candidate_id);
+		$this->db->where('user_id', $candidate_id);
 		$this->db->update('candidates', $update);
 	}
 	
