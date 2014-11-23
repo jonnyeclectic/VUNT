@@ -1508,12 +1508,12 @@ class Ion_auth_model extends CI_Model
 	// Makes someone, who already has candidate permissions, a candidate in a specific election.
 	public function become_candidate($election_id, $user_id)
 	{
-		$id = 0;
+		$id = 1;
 		$query = $this->db->get('candidates');
 		if ($query->num_rows() > 0)
 			foreach($query->result() as $row)
-				$id = $row->$candidate_id;
-		$id++;
+				$id++;
+			
 		$candidate = array(
 			'num_votes' => 0,
 			'user_id' => $user_id,
