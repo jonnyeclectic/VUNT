@@ -8,16 +8,16 @@
 		<th><?php echo lang('voting_votes_label');?></th>
 		<th><?php echo lang('voting_action_label');?></th>
 	</tr>
-	<?php for ($i = 0; isset($candidates[$i]); $i++):?>
+	<?php foreach ($candidates as $candidate):?>
 		<tr>
-            <td><?php echo htmlspecialchars($candidates[$i]['first_name'].' '.$candidates[$i]['last_name'],ENT_QUOTES,'UTF-8');?></td>
-            <td><?php echo htmlspecialchars($candidates[$i]['num_votes']);?></td>
+            <td><?php echo htmlspecialchars($candidate['first_name'].' '.$candidate['last_name'],ENT_QUOTES,'UTF-8');?></td>
+            <td><?php echo htmlspecialchars($candidate['num_votes']);?></td>
             <?php if (!isset($voted)): ?>
-           		<td><?php echo anchor('election/vote_for/'.$election_id.'/'.$candidates[$i]['candidate_id'], 'Vote');?></td>
+           		<td><?php echo anchor('election/vote_for/'.$election_id.'/'.$candidate['candidate_id'], 'Vote');?></td>
            	<?php endif; ?>
-           	<?php if ($voted === $candidates[$i]['candidate_id']): ?>
-           		<td><?php echo anchor('election/unvote_for/'.$election_id.'/'.$candidates[$i]['candidate_id'], 'Unvote');?></td>
+           	<?php if ($voted === $candidate['candidate_id']): ?>
+           		<td><?php echo anchor('election/unvote_for/'.$election_id.'/'.$candidate['candidate_id'], 'Unvote');?></td>
            	<?php endif; ?>
 		</tr>
-	<?php endfor;?>
+	<?php endforeach;?>
 </table>
