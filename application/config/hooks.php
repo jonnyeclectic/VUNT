@@ -9,7 +9,9 @@
 |	http://codeigniter.com/user_guide/general/hooks.html
 |
 */
-
+// This is the hook that updates the election status between
+// "pending", "active", and "inactive", based on the start and end times.
+// The full function is in the hooks folder.
 $hook['post_controller_constructor'] = array(
                                 'class'    => 'settings',
                                 'function' => 'update_status',

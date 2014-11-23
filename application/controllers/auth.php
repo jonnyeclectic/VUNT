@@ -67,7 +67,7 @@ class Auth extends CI_Controller {
 				//if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('auth/index', 'refresh');
+				redirect('auth', 'refresh');
 			}
 			else
 			{
@@ -489,7 +489,7 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 			//check to see if we are creating the user
 			//redirect them back to the admin page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("auth/login", 'refresh');
+			redirect("auth", 'refresh');
 		}
 		else
 		{

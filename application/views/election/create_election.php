@@ -13,17 +13,15 @@
             <?php echo form_input($description);?>
       </p>
       <p>  <!--Start Time-->
-            <?php echo lang('election_start_time_label', 'start_time');?> <br />
+            <?php echo lang('election_start_time_label', 'start_time').'  (Use the format YYYY-MM-DD HH:MM:SS)';?> <br />
             <?php echo form_input($start_time);?>
       </p>
       <p>  <!--End Time-->
-            <?php echo lang('election_end_time_label', 'end_time');?> <br />
+            <?php echo lang('election_end_time_label', 'end_time').'  (Use the format YYYY-MM-DD HH:MM:SS)';?> <br />
             <?php echo form_input($end_time);?>
       <p>
       <form><select id = "submit" name = "college" onchange="this.form.submit();"><p>
       	<?php foreach($myDropdown as $dd)
         echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>
 	  </p><input type="submit" name="submit" value="Create"></select></form>
-
-
 <?php echo form_close();?>

@@ -4,6 +4,7 @@ class Election extends CI_Controller {
 	
 	function __construct()
 	{
+		// loads all libraries and constructs function
 		parent::__construct();
 		$this->load->library('ion_auth');
 		$this->load->library('form_validation');
@@ -25,13 +26,15 @@ class Election extends CI_Controller {
 		}
 		else
 		{
-			if (!$this->ion_auth->is_admin())
+			if ($this->ion_auth->is_admin())
 			{
+				// If an admin, view all elections.
 				$this->data['elections'] = $this->ion_auth->elections();
 			}
 			else 
 			{
-				$this->data['elections'] = $this->ion_auth->elections(explode(',', $this->ion_auth->user()->row()->college));	
+				// If not an admin, only view elections that pertain to your colleges
+				$this->data['elections'] = $this->ion_auth->elections(explode(',', $this->ion_auth->user()->row()->college));
 			}
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -42,12 +45,15 @@ class Election extends CI_Controller {
 			if(isset($this->data['elections']))
 			foreach ($this->data['elections'] as $election)
 			{
-				if ($election['status'] === 'inactive')
+				if ($election['status'] === 'inactive')	// For all inactive elections, it's determined who the winner was.
 					$this->data['winner'][$i] = $this->ion_auth->winner($election['id']);
 				else
 					$this->data['winner'][$i] = NULL;
+				$this->data['is_candidates'][$election['id']] = $this->ion_auth->candidates($election['id']);
 				$i++;
 			}
+			// Passes all necessary variables to the view, election_index, so that only certain types of users
+			// see different things.
 			$this->data['is_admin'] = $this->ion_auth->is_admin();
 			$this->data['is_candidate'] = $this->ion_auth->is_candidate($this->ion_auth->user()->row()->id);
 			$this->data['in_election'] = $this->ion_auth->in_election($this->ion_auth->user()->row()->id);
@@ -55,7 +61,7 @@ class Election extends CI_Controller {
 		}
 	}
 	
-	
+	// Shows a list for an election of who the uer can vote for.
 	function vote($election_id)
 	{
 		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -65,19 +71,19 @@ class Election extends CI_Controller {
 		$this->data['voted'] = $this->ion_auth->voted($this->ion_auth->user()->row()->id, $election_id);
 		$this->_render_page('election/voting_index', $this->data);
 	}
-	
+	// Votes for a specific candidate once one is selected.
 	function vote_for($election_id, $candidate_id)
 	{
 		$this->ion_auth->vote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		redirect('election/vote/'.$election_id, 'refresh');
 	}
-	
+	// Causes the current user to become a candidate in the election refered to by $election_id.
 	function become_candidate($election_id)
 	{
-		become_candidate($election_id, $this->ion_auth->user()->row()->id);
+		$this->ion_auth->become_candidate($election_id, $this->ion_auth->user()->row()->id);
 		redirect('election');
 	}
-	
+	// Displays a page for election creation.
 	function create_election()
 	{
 		$query = $this->db->field_data('colleges');
@@ -151,13 +157,13 @@ class Election extends CI_Controller {
 			$this->_render_page('election/create_election', $this->data);
 		}
 	}
-	
+	// Removes specific vote for a candidate in an election, so that someone else may be voted for.
 	function unvote_for($election_id, $candidate_id)
 	{
 		$this->ion_auth->unvote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		redirect('election/vote/'.$election_id, 'refresh');
 	}
-	
+	// Applies a certain user for candidacy
 	function apply($user_id)
 	{
 		$this->ion_auth->apply_for_candidacy($user_id);

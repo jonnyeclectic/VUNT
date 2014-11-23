@@ -13,8 +13,12 @@
                 <?php endforeach?>
 			</td>
 			<td><?php echo ($user->active) ? anchor("auth/deactivate/".$user->id, lang('deactivate_button')) : anchor("auth/activate/". $user->id, lang('index_inactive_link'));?></td>
-			<td><?php echo anchor("auth/edit_user/".$user->id, 'Edit') ;?></td>					<!-- These are buttons for the home page-->
-			<td><?php echo anchor("election/apply/".$user->id, 'Apply to be a Candidate') ;?>
+
+			<td><?php echo anchor("auth/edit_user/".$user->id, 'Edit');?></td>
+			<td><?php if (!$is_pending && !$is_candidate): ?>
+				<?php echo anchor("election/apply/".$user->id, 'Apply to be a Candidate') ;?>
+			<?php endif; ?></td>
+
 			<td><?php echo anchor("election", 'View Elections') ;?></td>
 			<?php if ($is_admin):?>												<!-- These are buttons for the administrator-->
 				<td><?php echo anchor("application", 'Applications') ;?></td>
