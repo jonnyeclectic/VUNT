@@ -37,7 +37,7 @@
 
   	  </p>             
       </br>
-  	  <form><select multiple = "multiple" id = "submit" name = "college" onchange="this.form.submit();"><p>
+  	  <form><select id = "submit" name = "college" onchange="this.form.submit();"><p>
       <?php foreach($myDropdown as $dd)
       echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>
 	  </p><input type="submit" name="submit" value="Create"></select></form>
