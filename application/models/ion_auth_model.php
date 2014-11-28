@@ -1298,6 +1298,7 @@ class Ion_auth_model extends CI_Model
 	// candidates returns all candidates within an election
 	public function candidates($election_id)
 	{
+		echo "HELLO WORKING";
 		$this->db->where('election_id', $election_id);
 		$query = $this->db->get('candidates');
 		$this->db->select('id, first_name, last_name');
@@ -1310,8 +1311,14 @@ class Ion_auth_model extends CI_Model
 			{
 				if ($user->id == $row->user_id)
 				{
+<<<<<<< HEAD
+					$candidates[$i]['first_name'] = $user->first_name;
+					$candidates[$i]['last_name'] = $user->last_name;
+					echo $candidates[$i]['first_name']."<br";
+=======
 					$candidates[$row->user_id]['first_name'] = $user->first_name;
 					$candidates[$row->user_id]['last_name'] = $user->last_name;
+>>>>>>> 28265100fe7016f1316b538041168968da8c5e6c
 				}
 			}
 			$candidates[$row->user_id]['candidate_id'] = $row->user_id;

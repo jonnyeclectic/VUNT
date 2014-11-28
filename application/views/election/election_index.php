@@ -1,3 +1,4 @@
+
 <div id="infoMessage"><?php echo $message;?></div>
 <h1><?php echo lang('election_heading');?></h1>
 <?php if ($is_admin) {echo anchor('election/create_election', lang('election_create_label'));}?>
@@ -29,8 +30,10 @@
             		<?php echo htmlspecialchars($victor,ENT_QUOTES,'UTF-8');?>
             	<?php endforeach;?>
             <?php endif;?></td>
+
             <td><?php if (isset($is_candidates[$elections[$i]['id']]) && $elections[$i]['status'] === 'active'):?>
             	<?php echo anchor('election/vote/'.$elections[$i]['id'], 'Vote Now!<br>');?>
+
             <?php endif;?>
             <?php if ($is_candidate && !isset($in_election[$elections[$i]['id']]) && $elections[$i]['status'] !== 'inactive'):?>
             	<?php echo anchor('election/become_candidate/'.$elections[$i]['id'], 'Be a Candidate in This Election');?>

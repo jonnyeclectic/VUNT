@@ -556,8 +556,7 @@ class CI_DB_mysql_driver extends CI_DB {
 
 
 	/**
-	 * Replace statement
-	 *
+	 * 
 	 * Generates a platform-specific replace string from the supplied data
 	 *
 	 * @access	public

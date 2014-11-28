@@ -1,57 +1,20 @@
-<h1><?php echo lang('edit_user_heading');?></h1>
-<p><?php echo lang('edit_user_subheading');?></p>
+<h1><?php echo lang('edit_user_heading');?></h1>				<!-- Display Heading/Titles-->
+<p><?php echo lang('edit_user_subheading');?></p>				<!-- Display Heading/Titles-->
 
-<div id="infoMessage"><?php echo $message;?></div>
+<div id="infoMessage"><?php echo $message;?></div>				<!-- Error/Message Handler -->
 
 <?php echo form_open(uri_string());?>
 
       <p>
             <?php echo lang('edit_user_fname_label', 'first_name');?> <br />
-            <?php echo form_input($first_name);?>
+            <?php echo form_input($first_name);?>				<!-- Save User's input     -->
       </p>
 
       <p>
             <?php echo lang('edit_user_lname_label', 'last_name');?> <br />
-            <?php echo form_input($last_name);?>
+            <?php echo form_input($last_name);?>				<!-- Save User's input     -->
       </p>
-<select multiple = "multiple" name = "formColleges[]">
-      <p>
-      	<?php foreach($myDropdown as $dd)
-        echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>
-        <input type="submit" name="Submit" value="Submit">
-	  </p>
-	  </select>
-	  <?php
- 
-if(isset($_POST['formColleges']))
-{
-  $aColleges = $_POST['formColleges'];
-   
-  if(!isset($aColleges))
-  {
-    echo("<p>You didn't select any colleges!</p>\n");
-  } 
-  else
-  {
-    $nColleges = count($aColleges);
-     
-   // echo("<p>You selected $nColleges colleges: ");
-    for($i=0; $i < $nColleges; $i++)
-    {
-      //echo($aColleges[$i] . " ");
-      
-    }?>
-       <p>
-      		 <?php 
-      		 $college = implode(",", $aColleges);
-             echo form_hidden('college', $college);?>
-      </p>   <?php
-    
-    echo("</p>");
-  }
-}
 
-?>
       <p>
             <?php echo lang('edit_user_EUID_label', 'EUID');?> <br />
             <?php echo form_input($EUID);?>
@@ -93,6 +56,9 @@ if(isset($_POST['formColleges']))
       <?php echo form_hidden('id', $user->id);?>
       <?php echo form_hidden($csrf); ?>
 
-      <p><?php echo form_submit('submit', lang('edit_user_submit_btn'));?></p>
-
-<?php echo form_close();?>
+      <p><?php //echo form_submit('submit', lang('edit_user_submit_btn'));?></p>
+  	  <form><select multiple = "multiple" id = "submit" name = "college" onchange="this.form.submit();"><p> <!-- Save User's input when things are selected-->
+      <?php foreach($myDropdown as $dd)										// --Dropdown menu--
+      echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>	 <!-- Display colleges in list-->
+	  </p><input type="submit" name="submit" value="Create"></select></form> <!-- Save User's input-->
+<?php echo form_close();?>													 <!-- Submit button and close form-->

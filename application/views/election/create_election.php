@@ -24,5 +24,4 @@
       	<?php foreach($myDropdown as $dd)
         echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>
 	  </p><input type="submit" name="submit" value="Create"></select></form>
-
 <?php echo form_close();?>

@@ -67,7 +67,7 @@ class Auth extends CI_Controller {
 				//if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('auth/index', 'refresh');
+				redirect('auth', 'refresh');
 			}
 			else
 			{
@@ -467,6 +467,7 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 		$this->form_validation->set_rules('college', $this->lang->line('create_user_validation_college_label'));
 		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
+
 
 		if ($this->form_validation->run() == true)
 		{
