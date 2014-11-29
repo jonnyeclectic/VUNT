@@ -1,4 +1,3 @@
-
 <div id="infoMessage"><?php echo $message;?></div>
 <h1><?php echo lang('election_heading');?></h1>
 <?php if ($is_admin) {echo anchor('election/create_election', lang('election_create_label'));}?>

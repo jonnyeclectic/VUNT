@@ -1298,7 +1298,6 @@ class Ion_auth_model extends CI_Model
 	// candidates returns all candidates within an election
 	public function candidates($election_id)
 	{
-		echo "HELLO WORKING";
 		$this->db->where('election_id', $election_id);
 		$query = $this->db->get('candidates');
 		$this->db->select('id, first_name, last_name');
@@ -1311,14 +1310,8 @@ class Ion_auth_model extends CI_Model
 			{
 				if ($user->id == $row->user_id)
 				{
-<<<<<<< HEAD
-					$candidates[$i]['first_name'] = $user->first_name;
-					$candidates[$i]['last_name'] = $user->last_name;
-					echo $candidates[$i]['first_name']."<br";
-=======
 					$candidates[$row->user_id]['first_name'] = $user->first_name;
 					$candidates[$row->user_id]['last_name'] = $user->last_name;
->>>>>>> 28265100fe7016f1316b538041168968da8c5e6c
 				}
 			}
 			$candidates[$row->user_id]['candidate_id'] = $row->user_id;
@@ -1343,12 +1336,25 @@ class Ion_auth_model extends CI_Model
 		$query = $this->db->get('votes');
 			foreach($query->result() as $row)
 		$id++;
+		$check = 1;
+		while ($check == 1)
+		{
+			$check = 0;
+			$confirmation = rand(10000000, 99999999);
+			$query = $this->db->get('votes');
+			foreach($query->result() as $row)
+				if ($row->confirmation == $confirmation)
+					$check = 1;
+		}
+		
 		$vote = array(
 			'id' => $id,
 			'user_id' => $user_id,
 			'election_id' => $election_id,
-			'candidate_id' => $candidate_id
+			'candidate_id' => $candidate_id,
+			'confirmation' => $confirmation
 		);
+		
 		$this->db->insert('votes', $vote);
 		
 		$this->db->where('election_id', $election_id);
@@ -1363,6 +1369,8 @@ class Ion_auth_model extends CI_Model
 		$this->db->where('election_id', $election_id);
 		$this->db->where('user_id', $candidate_id);
 		$this->db->update('candidates', $update);
+		
+		return $confirmation;
 	}
 	
 	// Undoes everything the vote function does.
@@ -1412,6 +1420,17 @@ class Ion_auth_model extends CI_Model
 		foreach ($query->result() as $row)
 		{
 			return $row->name;
+		}
+	}
+	
+	public function name_user($user_id)
+	{
+		$this->db->select('id, first_name, last_name');
+		$this->db->where('id', $user_id);
+		$query = $this->db->get('users');
+		foreach ($query->result() as $row)
+		{
+			return $row->first_name.' '.$row->last_name;
 		}
 	}
 
