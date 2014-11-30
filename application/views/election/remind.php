@@ -1,6 +1,3 @@
 <div id="infoMessage"><?php echo $message;?></div>
-<?php echo 'Thank you for using VUNT!<br>'?>
-<?php foreach ($emails as $email): ?>
-	<?php echo $email.'<br>'; ?>
-<?php endforeach; ?>
+<?php echo 'Users that can vote for a candidate in the '.$election.' election have been reminded to vote.<br>'?>
 <?php echo anchor('home', 'Return to Home<br>')?>

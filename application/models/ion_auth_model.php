@@ -1573,7 +1573,8 @@ class Ion_auth_model extends CI_Model
 			$college = $row->college;
 		
 		$this->db->select('id, email, college');
-		$this->db->where('college', $college);
+		if ($college !== 'General')
+			$this->db->where('college', $college);
 		$query1 = $this->db->get('users');
 		$query2 = $this->db->get('votes');
 		foreach ($query1->result() as $row1) {

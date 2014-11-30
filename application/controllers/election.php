@@ -182,15 +182,15 @@ class Election extends CI_Controller {
 		$emails = $this->ion_auth->get_emails($election_id);
 		$this->data['election'] = $this->ion_auth->name_election($election_id);
 		$this->data['emails'] = $emails;
-		/*$message = 'This is just a reminder to vote in the '.$this->data['election'].' election on VUNT!';
+		$message = 'This is just a reminder to vote in the '.$this->data['election'].' election on VUNT!';
 		$this->email->from('DONOTREPLY@vunt.com', 'VUNT');
 		$this->email->to($emails);
 		$this->email->subject('Remember to Vote!');
 		$this->email->message('$message');
-		$this->email->send();*/
+		$this->email->send();
 		
 		$this->_render_page('election/remind', $this->data);
-		//echo $this->email->print_debugger();
+		echo $this->email->print_debugger();
 	}
 	// Applies a certain user for candidacy
 	function apply($user_id)
