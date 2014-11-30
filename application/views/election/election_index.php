@@ -30,10 +30,14 @@
             	<?php endforeach;?>
             <?php endif;?></td>
 
-            <td><?php if (isset($is_candidates[$elections[$i]['id']]) && $elections[$i]['status'] === 'active'):?>
-            	<?php echo anchor('election/vote/'.$elections[$i]['id'], 'Vote Now!<br>');?>
-
+            <td><?php if ($elections[$i]['status'] === 'active' && $is_admin):?>
+            	<?php echo anchor('election/remind/'.$elections[$i]['id'], 'Send Reminders to Vote<br>');?>
             <?php endif;?>
+            	
+            <?php if (isset($is_candidates[$elections[$i]['id']]) && $elections[$i]['status'] === 'active'):?>
+            	<?php echo anchor('election/vote/'.$elections[$i]['id'], 'Vote Now!<br>');?>
+            <?php endif;?>
+            
             <?php if ($is_candidate && !isset($in_election[$elections[$i]['id']]) && $elections[$i]['status'] !== 'inactive'):?>
             	<?php echo anchor('election/become_candidate/'.$elections[$i]['id'], 'Be a Candidate in This Election');?>
             <?php endif;?></td>
