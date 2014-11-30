@@ -8,6 +8,7 @@ class Election extends CI_Controller {
 		parent::__construct();
 		$this->load->library('ion_auth');
 		$this->load->library('form_validation');
+		$this->load->library('email');
 		$this->load->database();
 		$this->load->library(array('ion_auth','form_validation'));
 		$this->load->helper(array('url','language'));
@@ -172,6 +173,24 @@ class Election extends CI_Controller {
 			
 			$this->_render_page('election/create_election', $this->data);
 		}
+	}
+	// Remind users to vote for an election
+	function remind($election_id)
+	{
+		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+		
+		$emails = $this->ion_auth->get_emails($election_id);
+		$this->data['election'] = $this->ion_auth->name_election($election_id);
+		$this->data['emails'] = $emails;
+		/*$message = 'This is just a reminder to vote in the '.$this->data['election'].' election on VUNT!';
+		$this->email->from('DONOTREPLY@vunt.com', 'VUNT');
+		$this->email->to($emails);
+		$this->email->subject('Remember to Vote!');
+		$this->email->message('$message');
+		$this->email->send();*/
+		
+		$this->_render_page('election/remind', $this->data);
+		//echo $this->email->print_debugger();
 	}
 	// Applies a certain user for candidacy
 	function apply($user_id)

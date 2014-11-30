@@ -1562,6 +1562,34 @@ class Ion_auth_model extends CI_Model
 		else
 			return FALSE;
 	}
+	
+	public function get_emails($election_id)
+	{
+		$emails = array();
+		
+		$this->db->where('election_id', $election_id);
+		$query0 = $this->db->get('elections');
+		foreach ($query0->result() as $row)
+			$college = $row->college;
+		
+		$this->db->select('id, email, college');
+		$this->db->where('college', $college);
+		$query1 = $this->db->get('users');
+		$query2 = $this->db->get('votes');
+		foreach ($query1->result() as $row1) {
+			$check = 0;
+			foreach ($query2->result() as $row2) {
+				if ($row1->id == $row2->user_id && $election_id == $row2->election_id) {
+					$check = 1;
+				}
+			}
+			if ($check == 0)
+				$emails[$row1->id] = $row1->email;
+		}
+		
+		return $emails;
+	}
+	
 	/**
 	 * users
 	 *
