@@ -33,10 +33,14 @@
       <p>
             <?php echo lang('create_user_password_confirm_label', 'password_confirm');?> <br />
             <?php echo form_input($password_confirm);?>
-
-
   	  </p>             
-      </br>
+      </br>
+  	  <form><select id = "submit" name = "college" onchange="this.form.submit();"><p>
+      <?php foreach($myDropdown as $dd)
+      echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>
+	  </p><input type="submit" name="submit" value="Create"></select></form>
+<?php //echo form_submit('submit', lang('create_user_submit_btn'));
+      /*</br>
       <input type="checkbox" name="checked" value="NULL">Apply To Be a Candidate
 	  <?php echo form_hidden($checked);?>
       <p><?php //echo form_submit('submit', lang('edit_user_submit_btn'));?></p>
@@ -53,7 +57,7 @@ if(isset($_POST['college']))
 	echo form_hidden($college);
 	//echo $college;//form_hidden($college);
 }
-
+*/
 echo form_close();?>
 
 

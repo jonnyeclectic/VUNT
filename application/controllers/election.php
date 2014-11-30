@@ -8,6 +8,7 @@ class Election extends CI_Controller {
 		parent::__construct();
 		$this->load->library('ion_auth');
 		$this->load->library('form_validation');
+		$this->load->library('email');
 		$this->load->database();
 		$this->load->library(array('ion_auth','form_validation'));
 		$this->load->helper(array('url','language'));
@@ -74,8 +75,26 @@ class Election extends CI_Controller {
 	// Votes for a specific candidate once one is selected.
 	function vote_for($election_id, $candidate_id)
 	{
-		$this->ion_auth->vote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
+		vote_info($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
+		$confirmation = $this->ion_auth->vote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
+		redirect('election/receipt/'.$election_id.'/'.$candidate_id.'/'.$confirmation, 'refresh');
+	}
+	// Removes specific vote for a candidate in an election, so that someone else may be voted for.
+	function unvote_for($election_id, $candidate_id)
+	{
+		vote_info($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
+		$this->ion_auth->unvote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		redirect('election/vote/'.$election_id, 'refresh');
+	}
+	// Produces voting receipt upon a successful vote.
+	function receipt($election_id, $candidate_id, $confirmation)
+	{
+		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+		$this->data['confirmation'] = $confirmation;
+		$this->data['election'] = $this->ion_auth->name_election($election_id);
+		$this->data['election_id'] = $election_id;
+		$this->data['candidate'] = $this->ion_auth->name_user($candidate_id);
+		$this->_render_page('election/receipt', $this->data);
 	}
 	// Causes the current user to become a candidate in the election refered to by $election_id.
 	function become_candidate($election_id)
@@ -157,11 +176,37 @@ class Election extends CI_Controller {
 			$this->_render_page('election/create_election', $this->data);
 		}
 	}
-	// Removes specific vote for a candidate in an election, so that someone else may be voted for.
-	function unvote_for($election_id, $candidate_id)
+
+	function vote_info($election, $candidate, $user)
 	{
-		$this->ion_auth->unvote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
-		redirect('election/vote/'.$election_id, 'refresh');
+		$date = date("Y-m-d H:i:s");
+		$time = array(
+			'name'  => $date,
+			'id'    => $date,
+			'type'  => 'text',
+			'value' => $date,
+		);	
+		
+		$vote_info = $this->ion_auth->vote_info($time['name'], $election, $candidate, $user);
+	}
+
+	// Remind users to vote for an election
+	function remind($election_id)
+	{
+		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+		
+		$emails = $this->ion_auth->get_emails($election_id);
+		$this->data['election'] = $this->ion_auth->name_election($election_id);
+		$this->data['emails'] = $emails;
+		$message = 'This is just a reminder to vote in the '.$this->data['election'].' election on VUNT!';
+		$this->email->from('DONOTREPLY@vunt.com', 'VUNT');
+		$this->email->to($emails);
+		$this->email->subject('Remember to Vote!');
+		$this->email->message('$message');
+		$this->email->send();
+		
+		$this->_render_page('election/remind', $this->data);
+		echo $this->email->print_debugger();
 	}
 	// Applies a certain user for candidacy
 	function apply($user_id)

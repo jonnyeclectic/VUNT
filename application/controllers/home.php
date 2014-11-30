@@ -1,5 +1,6 @@
 <?php 
 include 'application\controllers\auth.php';
+include 'application\controllers\election.php';
 // Home page, really serving more of a placeholder function, but displays many options.
 class Home extends CI_Controller {
 	
@@ -18,6 +19,7 @@ class Home extends CI_Controller {
 	// options on the home page and their own specific data.
 	public function index(){
 		$this->data['title'] = "Home";
+		//Election::vote_info();
 		if (!$this->ion_auth->logged_in())
 			Auth::create_user($this->data['title']);
 		else {

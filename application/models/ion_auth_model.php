@@ -1298,7 +1298,6 @@ class Ion_auth_model extends CI_Model
 	// candidates returns all candidates within an election
 	public function candidates($election_id)
 	{
-		echo "HELLO WORKING";
 		$this->db->where('election_id', $election_id);
 		$query = $this->db->get('candidates');
 		$this->db->select('id, first_name, last_name');
@@ -1311,14 +1310,8 @@ class Ion_auth_model extends CI_Model
 			{
 				if ($user->id == $row->user_id)
 				{
-<<<<<<< HEAD
-					$candidates[$i]['first_name'] = $user->first_name;
-					$candidates[$i]['last_name'] = $user->last_name;
-					echo $candidates[$i]['first_name']."<br";
-=======
 					$candidates[$row->user_id]['first_name'] = $user->first_name;
 					$candidates[$row->user_id]['last_name'] = $user->last_name;
->>>>>>> 28265100fe7016f1316b538041168968da8c5e6c
 				}
 			}
 			$candidates[$row->user_id]['candidate_id'] = $row->user_id;
@@ -1343,12 +1336,25 @@ class Ion_auth_model extends CI_Model
 		$query = $this->db->get('votes');
 			foreach($query->result() as $row)
 		$id++;
+		$check = 1;
+		while ($check == 1)
+		{
+			$check = 0;
+			$confirmation = rand(10000000, 99999999);
+			$query = $this->db->get('votes');
+			foreach($query->result() as $row)
+				if ($row->confirmation == $confirmation)
+					$check = 1;
+		}
+		
 		$vote = array(
 			'id' => $id,
 			'user_id' => $user_id,
 			'election_id' => $election_id,
-			'candidate_id' => $candidate_id
+			'candidate_id' => $candidate_id,
+			'confirmation' => $confirmation
 		);
+		
 		$this->db->insert('votes', $vote);
 		
 		$this->db->where('election_id', $election_id);
@@ -1363,6 +1369,8 @@ class Ion_auth_model extends CI_Model
 		$this->db->where('election_id', $election_id);
 		$this->db->where('user_id', $candidate_id);
 		$this->db->update('candidates', $update);
+		
+		return $confirmation;
 	}
 	
 	// Undoes everything the vote function does.
@@ -1412,6 +1420,17 @@ class Ion_auth_model extends CI_Model
 		foreach ($query->result() as $row)
 		{
 			return $row->name;
+		}
+	}
+	
+	public function name_user($user_id)
+	{
+		$this->db->select('id, first_name, last_name');
+		$this->db->where('id', $user_id);
+		$query = $this->db->get('users');
+		foreach ($query->result() as $row)
+		{
+			return $row->first_name.' '.$row->last_name;
 		}
 	}
 
@@ -1543,6 +1562,35 @@ class Ion_auth_model extends CI_Model
 		else
 			return FALSE;
 	}
+	
+	public function get_emails($election_id)
+	{
+		$emails = array();
+		
+		$this->db->where('election_id', $election_id);
+		$query0 = $this->db->get('elections');
+		foreach ($query0->result() as $row)
+			$college = $row->college;
+		
+		$this->db->select('id, email, college');
+		if ($college !== 'General')
+			$this->db->where('college', $college);
+		$query1 = $this->db->get('users');
+		$query2 = $this->db->get('votes');
+		foreach ($query1->result() as $row1) {
+			$check = 0;
+			foreach ($query2->result() as $row2) {
+				if ($row1->id == $row2->user_id && $election_id == $row2->election_id) {
+					$check = 1;
+				}
+			}
+			if ($check == 0)
+				$emails[$row1->id] = $row1->email;
+		}
+		
+		return $emails;
+	}
+	
 	/**
 	 * users
 	 *
@@ -2159,6 +2207,34 @@ class Ion_auth_model extends CI_Model
 
 		// report success
 		$this->set_message('group_creation_successful');
+		// return the brand new group id
+		return $group_id;
+	}
+
+	public function vote_info($group_name = FALSE, $election, $candidate, $user, $group_description = '')
+	{
+		$id = 0;
+		$query = $this->db->get('vote_info');
+		foreach($query->result() as $row)
+			$id = $row->vote_id;	
+		$id++;
+		$id = $user;
+		// bail if the group name was not passed
+		if(!$group_name)
+		{
+			$this->set_error('group_name_required');
+			return FALSE;
+		}
+
+		$data = array('vote_id'=>$id,'timestamp'=>$group_name);//'election_id'=>$id,'name'=>$group_name,'description'=>$group_description,'college'=>$college,'start_time'=>$start,'end_time'=>$end);
+
+		//filter out any data passed that doesnt have a matching column in the groups table
+		//and merge the set group data and the additional data
+
+		// insert the new group
+		$this->db->insert($this->tables['vote_info'], $data);
+		$group_id = $this->db->insert_id();
+
 		// return the brand new group id
 		return $group_id;
 	}

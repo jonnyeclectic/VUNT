@@ -32,6 +32,7 @@ $config['tables']['groups']          = 'groups';
 $config['tables']['users_groups']    = 'users_groups';
 $config['tables']['login_attempts']  = 'login_attempts';
 $config['tables']['elections']  	 = 'elections';
+$config['tables']['vote_info']  	 = 'vote_info';
 /*
  | Users table column and Group table column you want to join WITH.
  |
@@ -41,6 +42,7 @@ $config['tables']['elections']  	 = 'elections';
 $config['join']['users']  = 'user_id';
 $config['join']['groups'] = 'group_id';
 $config['join']['elections'] = 'election_id';
+$config['join']['vote_info'] = 'timestamp';
 
 /*
  | -------------------------------------------------------------------------
