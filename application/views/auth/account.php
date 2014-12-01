@@ -23,5 +23,9 @@
 			<?php if ($is_admin):?>												<!-- These are buttons for the administrator-->
 				<td><?php echo anchor("application", 'Applications') ;?></td>
 			<?php endif;?>
+			
+			<?php if ($is_admin):?>												<!-- These are buttons for the administrator-->
+				<td><?php echo anchor("election/chart/", 'Live Feed') ;?></td>
+			<?php endif;?>
 		</tr>
 </table>

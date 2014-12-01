@@ -1,9 +1,7 @@
 <?php 
 include 'application\controllers\auth.php';
-include 'application\controllers\election.php';?>
-<style>
-<?php include 'design.css';?>
-</style><link rel="stylesheet" href="design.css" type="text/css"><?php
+include 'application\controllers\election.php';
+
 //application\controllers\election.php';
 // Home page, really serving more of a placeholder function, but displays many options.
 class Home extends CI_Controller {
