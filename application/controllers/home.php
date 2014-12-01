@@ -19,7 +19,7 @@ class Home extends CI_Controller {
 	// options on the home page and their own specific data.
 	public function index(){
 		$this->data['title'] = "Home";
-		//Election::vote_info();
+		Election::vote_info();
 		if (!$this->ion_auth->logged_in())
 			Auth::create_user($this->data['title']);
 		else {

@@ -1356,6 +1356,10 @@ class Ion_auth_model extends CI_Model
 		);
 		
 		$this->db->insert('votes', $vote);
+		$vote_unvote = "FALSE";
+		$date = date("Y-m-d H:i:s");
+
+		vote_info($date, $confirmation, $vote_unvote);
 		
 		$this->db->where('election_id', $election_id);
 		$this->db->where('user_id', $candidate_id);
@@ -1395,6 +1399,8 @@ class Ion_auth_model extends CI_Model
 		$this->db->where('election_id', $election_id);
 		$this->db->where('user_id', $candidate_id);
 		$this->db->update('candidates', $update);
+		$vote_unvote = "TRUE";
+		vote_info($confirmation, $vote_unvote);
 	}
 	
 	// checks that a user with $user_id hasn't previously
@@ -2211,30 +2217,48 @@ class Ion_auth_model extends CI_Model
 		return $group_id;
 	}
 
-	public function vote_info($group_name = FALSE, $election, $candidate, $user, $group_description = '')
+	public function vote_info($group_name = FALSE, $confirmation, $vote_unvote)
 	{
-		$id = 0;
-		$query = $this->db->get('vote_info');
-		foreach($query->result() as $row)
-			$id = $row->vote_id;	
-		$id++;
-		$id = $user;
-		// bail if the group name was not passed
-		if(!$group_name)
-		{
-			$this->set_error('group_name_required');
-			return FALSE;
+		if($vote_unvote){ //unvote
+{
+			$removing = array(
+			'election_id' => $election_id,
+			'candidate_id' => $candidate_id,
+			'user_id' => $user_id
+			);
+			$this->db->delete('vote_info', $removing);
+			
+			$this->db->where('vote_id', $vote_idd);
+			$this->db->where('timestamp', $timestamp);
+			$query = $this->db->get('candidates');
+			foreach($query->result() as $row)
+			{
+				$num_votes = $row->num_votes;
+			}
+			$num_votes--;
+			$update = array('num_votes' => $num_votes);
+			$this->db->where('election_id', $election_id);
+			$this->db->where('user_id', $candidate_id);
+			$this->db->update('candidates', $update);
+		}			
 		}
-
-		$data = array('vote_id'=>$id,'timestamp'=>$group_name);//'election_id'=>$id,'name'=>$group_name,'description'=>$group_description,'college'=>$college,'start_time'=>$start,'end_time'=>$end);
-
-		//filter out any data passed that doesnt have a matching column in the groups table
-		//and merge the set group data and the additional data
-
-		// insert the new group
-		$this->db->insert($this->tables['vote_info'], $data);
-		$group_id = $this->db->insert_id();
-
+		else{ //vote
+			$id = $confirmation;
+				// bail if the group name was not passed
+			if(!$group_name)
+			{
+				$this->set_error('group_name_required');
+				return FALSE;
+			}
+			$data = array('vote_id'=>$id,'timestamp'=>$group_name);//'election_id'=>$id,'name'=>$group_name,'description'=>$group_description,'college'=>$college,'start_time'=>$start,'end_time'=>$end);
+	
+			//filter out any data passed that doesnt have a matching column in the groups table
+			//and merge the set group data and the additional data
+	
+			// insert the new group
+			$this->db->insert($this->tables['vote_info'], $data);
+			$group_id = $this->db->insert_id();
+		}
 		// return the brand new group id
 		return $group_id;
 	}
