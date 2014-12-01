@@ -1,5 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
-
+<?php defined('BASEPATH') OR exit('No direct script access allowed');?>
+<style>
+<?php include 'design.css';?>
+</style><link rel="stylesheet" href="design.css" type="text/css"><?php
 class Election extends CI_Controller {
 	
 	function __construct()
@@ -31,6 +33,7 @@ class Election extends CI_Controller {
 			{
 				// If an admin, view all elections.
 				$this->data['elections'] = $this->ion_auth->elections();
+				$this->chart();
 			}
 			else 
 			{
@@ -61,6 +64,109 @@ class Election extends CI_Controller {
 			$this->_render_page('election/election_index', $this->data);
 		}
 	}
+
+	function chart()
+	{
+			$add_vote = FALSE;?>
+			
+<dl style="width: 300px">
+<dt>12 a.m.</dt>
+<?php $count['0'] = $this->ion_auth->vote_info("0",$add_vote);?><dd><div id="data-one" class="bar" style="width: 80%"><?php echo $count['0']?></div></dd>
+<dt>1 a.m.</dt>
+<?php $count['1'] = $this->ion_auth->vote_info("1",$add_vote);?><dd><div id="data-one" class="bar" style="width: 80%"><?php echo $count['1']?></div></dd>
+<dt>2 a.m.</dt>
+<?php $count['2'] = $this->ion_auth->vote_info("2",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['2']?></div></dd>
+<dt>3 a.m.</dt>
+<?php $count['3'] = $this->ion_auth->vote_info("3",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['3']?></div></dd>
+<dt>4 a.m.</dt>
+<?php $count['4'] = $this->ion_auth->vote_info("4",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['4']?></div></dd>
+<dt>5 a.m.</dt>
+<?php $count['5'] = $this->ion_auth->vote_info("5",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['5']?></div></dd>
+<dt>6 a.m.</dt>
+<?php $count['6'] = $this->ion_auth->vote_info("6",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['6']?></div></dd>
+<dt>7 a.m.</dt>
+<?php $count['7'] = $this->ion_auth->vote_info("7",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['7']?></div></dd>
+<dt>8 a.m.</dt>
+<?php $count['8'] = $this->ion_auth->vote_info("8",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['8']?></div></dd>
+<dt>9 a.m.</dt>
+<?php $count['9'] = $this->ion_auth->vote_info("9",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['9']?></div></dd>
+<dt>10 a.m.</dt>
+<?php $count['10'] = $this->ion_auth->vote_info("10",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['10']?></div></dd>
+<dt>11 a.m.</dt>
+<?php $count['11'] = $this->ion_auth->vote_info("11",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['11']?></div></dd>
+<dt>12 p.m.</dt>
+<?php $count['12'] = $this->ion_auth->vote_info("12",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['12']?></div></dd>
+<dt>1 p.m.</dt>
+<?php $count['13'] = $this->ion_auth->vote_info("13",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['13']?></div></dd>
+<dt>2 p.m.</dt>
+<?php $count['14'] = $this->ion_auth->vote_info("14",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['14']?></div></dd>
+<dt>3 p.m.</dt>
+<?php $count['15'] = $this->ion_auth->vote_info("15",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['15']?></div></dd>
+<dt>4 p.m.</dt>
+<?php $count['16'] = $this->ion_auth->vote_info("16",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['16']?></div></dd>
+<dt>5 p.m.</dt>
+<?php $count['17'] = $this->ion_auth->vote_info("17",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['17']?></div></dd>
+<dt>6 p.m.</dt>
+<?php $count['18'] = $this->ion_auth->vote_info("18",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['18']?></div></dd>
+<dt>7 p.m.</dt>
+<?php $count['19'] = $this->ion_auth->vote_info("19",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['19']?></div></dd>
+<dt>8 p.m.</dt>
+<?php $count['20'] = $this->ion_auth->vote_info("20",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['20']?></div></dd>
+<dt>9 p.m.</dt>
+<?php $count['21'] = $this->ion_auth->vote_info("21",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['21']?></div></dd>
+<dt>10 p.m.</dt>
+<?php $count['22'] = $this->ion_auth->vote_info("22",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['22']?></div></dd>
+<dt>11 p.m.</dt>
+<?php $count['23'] = $this->ion_auth->vote_info("23",$add_vote);?><dd><div id="data-two" class="bar" style="width: 80%"><?php echo $count['23']?></div></dd>
+</dl>
+<style type="text/css">
+* { font-family: Helvetica, Arial; font-size: 12px;}
+
+dt { float: left; padding: 4px; }
+
+.bar {
+margin-bottom: 10px;
+color: #fff;
+padding: 4px;
+text-align: center;
+background: -webkit-gradient(linear, left top, left bottom, from(#ff7617), to(#ba550f));
+background-color: #ff7617;
+-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,0.25)));
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+-webkit-animation-name:bar;
+-webkit-animation-duration:0.5s;
+-webkit-animation-iteration-count:1;
+-webkit-animation-timing-function:ease-out;
+}
+
+#data-one { -webkit-animation-name:bar-one; }
+#data-two { -webkit-animation-name:bar-two; }
+#data-three { -webkit-animation-name:bar-three; }
+#data-four { -webkit-animation-name:bar-four; }
+
+@-webkit-keyframes bar-one {
+0% { width:0%; }
+100% { width:60%; }
+}
+
+@-webkit-keyframes bar-two {
+0% { width:0%; }
+100% { width:80%; }
+}
+
+@-webkit-keyframes bar-three {
+0% { width:0%; }
+100% { width:64%; }
+}
+
+@-webkit-keyframes bar-four {
+0% { width:0%; }
+100% { width:97%; }
+}
+</style><?php		
+	}
 	
 	// Shows a list for an election of who the uer can vote for.
 	function vote($election_id)
@@ -75,14 +181,12 @@ class Election extends CI_Controller {
 	// Votes for a specific candidate once one is selected.
 	function vote_for($election_id, $candidate_id)
 	{
-		vote_info($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		$confirmation = $this->ion_auth->vote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		redirect('election/receipt/'.$election_id.'/'.$candidate_id.'/'.$confirmation, 'refresh');
 	}
 	// Removes specific vote for a candidate in an election, so that someone else may be voted for.
 	function unvote_for($election_id, $candidate_id)
 	{
-		vote_info($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		$this->ion_auth->unvote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		redirect('election/vote/'.$election_id, 'refresh');
 	}
@@ -177,18 +281,6 @@ class Election extends CI_Controller {
 		}
 	}
 
-	function vote_info($election, $candidate, $user)
-	{
-		$date = date("Y-m-d H:i:s");
-		$time = array(
-			'name'  => $date,
-			'id'    => $date,
-			'type'  => 'text',
-			'value' => $date,
-		);	
-		
-		$vote_info = $this->ion_auth->vote_info($time['name'], $election, $candidate, $user);
-	}
 	// Remind users to vote for an election
 	function remind($election_id)
 	{

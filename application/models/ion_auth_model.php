@@ -1357,7 +1357,7 @@ class Ion_auth_model extends CI_Model
 		
 		$this->db->insert('votes', $vote);
 		$date = date("G");
-		vote_info($date); 
+		$this->ion_auth->vote_info($date); 
 		
 		$this->db->where('election_id', $election_id);
 		$this->db->where('user_id', $candidate_id);
@@ -2213,7 +2213,7 @@ class Ion_auth_model extends CI_Model
 		return $group_id;
 	}
 
-	public function vote_info($time)
+	public function vote_info($time, $add_vote = TRUE)
 	{
 		
 		$this->db->where('Time', $time);
@@ -2222,7 +2222,8 @@ class Ion_auth_model extends CI_Model
 		{
 			$counter = $row->counter;
 		}
-		$counter++;
+		if($add_vote)
+			$counter++;
 		$update = array('counter' => $counter);
 		$this->db->where('Time', $time);
 		$this->db->update('vote_info', $update);
