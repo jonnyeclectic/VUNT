@@ -171,6 +171,15 @@ $lang['voting_name_label'] 	 = 'Name';
 $lang['voting_votes_label']  = 'Votes';
 $lang['voting_action_label'] = 'Action';
 
+//Searching
+$lang['search_heading']  = 'Enter Confirmation Number';
+$lang['search_user'] = 'Voter';
+$lang['search_election']  = 'Election';
+$lang['search_candidate'] = 'Candidate';
+$lang['search_confirmation'] = 'Confirmation Number';
+$lang['search_search'] = 'Search';
+$lang['search_results'] = 'Voting Information';
+
 // Applications
 $lang['application_user_heading'] 			= 'Applications for Usership';
 $lang['application_user_subheading']    	= 'Below are the applications for those wanting to become users.';

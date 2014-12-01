@@ -27,5 +27,10 @@
 			<?php if ($is_admin):?>												<!-- These are buttons for the administrator-->
 				<td><?php echo anchor("election/chart/", 'Live Feed') ;?></td>
 			<?php endif;?>
+			
+			<?php if ($is_admin):?>												<!-- These are buttons for the administrator-->
+				<td><?php echo anchor("election/search/", 'Search Confirmation Number') ;?></td>
+			<?php endif;?>
+
 		</tr>
 </table>

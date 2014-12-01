@@ -101,6 +101,78 @@ class Election extends CI_Controller {
 		$this->data['candidate'] = $this->ion_auth->name_user($candidate_id);
 		$this->_render_page('election/receipt', $this->data);
 	}
+	
+	function search()
+	{
+
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
+		{
+			redirect('auth', 'refresh');
+		}
+
+		//validate form input
+		$this->form_validation->set_rules('confirmation', $this->lang->line('election_name_label'),'required');
+
+		if ($this->form_validation->run() == TRUE)
+		{
+
+			$query = $this->db->get('votes');
+			$this->data['confirmation'] = $this->input->post('confirmation');
+			foreach($query->result() as $row){
+				if ($row->confirmation == $this->data['confirmation']){
+					$this->data['candidate_id'] =	$row->candidate_id;
+					$this->data['user_id'] = 		$row->user_id;
+					$this->data['election_id'] = 	$row->election_id;
+				}
+			}
+			
+			$query = $this->db->get('users');
+			foreach($query->result() as $row){
+				if ($row->id == $this->data['user_id']){
+					$this->data['user_id'] = $row->username;
+				}
+			}			
+			
+			$query = $this->db->get('candidates');
+			foreach($query->result() as $row){
+				if ($row->candidate_id == $this->data['candidate_id']){
+					$this->data['candidate_id'] =	$row->user_id;
+				}
+			}
+			
+			$query = $this->db->get('users');
+			foreach($query->result() as $row){
+				if ($row->id == $this->data['candidate_id']){
+					$this->data['candidate_id'] = 	$row->username;
+				}
+			}			
+			
+			$query = $this->db->get('elections');
+			foreach($query->result() as $row){
+				if ($row->election_id == $this->data['election_id']){
+					$this->data['election_id'] = 	$row->name;
+				}
+			}							
+			
+			
+			$this->_render_page('election/search_results', $this->data);
+		}
+		else
+		{
+			//display the create group form
+			//set the flash data error message if there is one
+			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+			$this->data['confirmation'] = array(
+				'name'  => 'confirmation',
+				'id'    => 'confirmation',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('confirmation'),
+			);	
+			
+			$this->_render_page('election/search', $this->data);
+		}
+	}
 	// Causes the current user to become a candidate in the election refered to by $election_id.
 	function become_candidate($election_id)
 	{
