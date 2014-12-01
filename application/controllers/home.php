@@ -23,28 +23,27 @@ class Home extends CI_Controller {
 	// options on the home page and their own specific data.
 	public function index(){
 		$this->data['title'] = "Home";
-		$count = $this->ion_auth->vote_info($date);
 		if (!$this->ion_auth->logged_in()){
 			Auth::create_user($this->data['title']);?>
 			<dl style="width: 300px">
 <dt>12 a.m.</dt>
-<dd><div id="data-one" class="bar" style="width: 60%"><?php $count = $this->ion_auth->vote_info($date); echo $count?></div></dd>
+<dd><div id="data-one" class="bar" style="width: 60%"><?php $count = $this->ion_auth->vote_info("0"); echo $count?></div></dd>
 <dt>1 a.m.</dt>
-<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info($date); echo $count?></div></dd>
+<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info("1"); echo $count?></div></dd>
 <dt>2 a.m.</dt>
-<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info($date); echo $count?></div></dd>
+<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info("2"); echo $count?></div></dd>
 <dt>3 a.m.</dt>
-<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info($date); echo $count?></div></dd>
+<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info("3"); echo $count?></div></dd>
 <dt>4 a.m.</dt>
-<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info($date); echo $count?></div></dd>
+<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info("4"); echo $count?></div></dd>
 <dt>5 a.m.</dt>
-<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info($date); echo $count?></div></dd>
+<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info("5"); echo $count?></div></dd>
 <dt>6 a.m.</dt>
-<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info($date); echo $count?></div></dd>
+<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info("6"); echo $count?></div></dd>
 <dt>7 a.m.</dt>
-<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info($date); echo $count?></div></dd>
+<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info("7"); echo $count?></div></dd>
 <dt>8 a.m.</dt>
-<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info($date); echo $count?></div></dd>
+<dd><div id="data-two" class="bar" style="width: 80%"><?php $count = $this->ion_auth->vote_info("8"); echo $count?></div></dd>
 <dt>9 a.m.</dt>
 <dd><div id="data-two" class="bar" style="width: 80%">80%</div></dd>
 <dt>10 a.m.</dt>
