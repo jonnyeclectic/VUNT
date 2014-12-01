@@ -75,20 +75,14 @@ class Election extends CI_Controller {
 	// Votes for a specific candidate once one is selected.
 	function vote_for($election_id, $candidate_id)
 	{
-<<<<<<< HEAD
 		vote_info($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
-=======
->>>>>>> origin/master
 		$confirmation = $this->ion_auth->vote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		redirect('election/receipt/'.$election_id.'/'.$candidate_id.'/'.$confirmation, 'refresh');
 	}
 	// Removes specific vote for a candidate in an election, so that someone else may be voted for.
 	function unvote_for($election_id, $candidate_id)
 	{
-<<<<<<< HEAD
 		vote_info($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
-=======
->>>>>>> origin/master
 		$this->ion_auth->unvote($election_id, $candidate_id, $this->ion_auth->user()->row()->id);
 		redirect('election/vote/'.$election_id, 'refresh');
 	}
@@ -182,7 +176,6 @@ class Election extends CI_Controller {
 			$this->_render_page('election/create_election', $this->data);
 		}
 	}
-<<<<<<< HEAD
 
 	function vote_info($election, $candidate, $user)
 	{
@@ -196,15 +189,9 @@ class Election extends CI_Controller {
 		
 		$vote_info = $this->ion_auth->vote_info($time['name'], $election, $candidate, $user);
 	}
-
 	// Remind users to vote for an election
 	function remind($election_id)
 	{
-=======
-	// Remind users to vote for an election
-	function remind($election_id)
-	{
->>>>>>> origin/master
 		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 		
 		$emails = $this->ion_auth->get_emails($election_id);
