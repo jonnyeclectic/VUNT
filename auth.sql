@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2014 at 11:01 PM
--- Server version: 5.5.39
--- PHP Version: 5.4.31
+-- Generation Time: Dec 02, 2014 at 01:55 AM
+-- Server version: 5.6.20
+-- PHP Version: 5.5.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -42,7 +42,7 @@ INSERT INTO `candidates` (`user_id`, `candidate_id`, `election_id`, `num_votes`)
 (1, 2, 2, 1),
 (4, 3, 2, 0),
 (8, 4, 2, 0),
-(1, 5, 5, 0);
+(1, 5, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `college`, `EUID`, `valid_user`, `candidacy_request`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1417370715, 1, 'Admin', 'istrator', 'College of Engineering', '0', 1, 0),
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1417481462, 1, 'Admin', 'istrator', 'College of Engineering', '0', 1, 0),
 (4, '::1', 'christian fitch', '$2y$08$xGvkZXZrKFjTisOSvlkz3OzECxahQ5hlq5hja4Mf9SzpBawdKMvL2', NULL, 'zapheres@gmail.com', NULL, NULL, NULL, NULL, 1416679883, 1416712337, 1, 'Christian', 'Fitch', 'Toulouse Graduate School', 'ccf0056', 1, 0),
 (5, '::1', 'zach triblionee', '$2y$08$0hqMyNVxoATKK5a2p/iZAO9nFbNiSs7W5m..Wd7MqcCg.NgnCGGhW', NULL, 'ztmeister@my.unt.edu', NULL, NULL, NULL, NULL, 1416692126, 1416692162, 1, 'Zach', 'Triblionee', 'College of Education', 'ztt7490', 1, 0),
 (6, '::1', 'hoola boola', '$2y$08$TJRIM0ZXunxCW91SM/Sr9ucRlnEaIZVu9DNfP9zStuu9e0yKf8WPe', NULL, 'derp@woo.com', NULL, NULL, NULL, NULL, 1416692930, 1416694433, 1, 'Hoola', 'Boola', 'General', 'ppp0000', 1, 0),
@@ -226,7 +226,50 @@ CREATE TABLE IF NOT EXISTS `votes` (
 --
 
 INSERT INTO `votes` (`id`, `user_id`, `election_id`, `candidate_id`, `confirmation`) VALUES
-(0, 1, 2, 1, 99033203);
+(0, 1, 2, 1, 99033203),
+(1, 1, 5, 1, 35496520),
+(2, 1, 5, 0, 17558593);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vote_info`
+--
+
+CREATE TABLE IF NOT EXISTS `vote_info` (
+  `counter` int(11) NOT NULL,
+  `Time` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `vote_info`
+--
+
+INSERT INTO `vote_info` (`counter`, `Time`) VALUES
+(0, 0),
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(7, 8),
+(1, 9),
+(1, 10),
+(2, 11),
+(4, 12),
+(2, 13),
+(0, 14),
+(0, 15),
+(0, 16),
+(0, 17),
+(0, 18),
+(0, 19),
+(0, 20),
+(0, 21),
+(0, 22),
+(0, 23);
 
 --
 -- Indexes for dumped tables

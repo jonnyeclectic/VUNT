@@ -10,7 +10,7 @@
 <dt>1 a.m.</dt>
 <dd><div id="data-two" class="bar" style="width: <?php echo  $count['1']/$sum * 100;?>%"><?php echo $count['1']?></div></dd>
 <dt>2 a.m.</dt>
-<dd><div id="data-three" class="bar" style="width: <?php echo  $count['2']/$sum * 100;?>%"><?php echo $count['2']?></div></dd>
+<dd><div id="data-two" class="bar" style="width: <?php echo $count['2']/$sum * 100;?>%"><?php echo $count['2']?></div></dd>
 <dt>3 a.m.</dt>
 <dd><div id="data-two" class="bar" style="width: <?php echo  $count['3']/$sum * 100;?>%"><?php echo $count['3']?></div></dd>
 <dt>4 a.m.</dt>
@@ -78,4 +78,6 @@ border-radius: 2px;
 }
 
 }
-</style><?php	
+</style>
+
+<?php echo anchor('home', 'Return To Home<br>')?>
