@@ -69,7 +69,7 @@ class Election extends CI_Controller {
 		$this->load->view('election/Live_Feed');	
 	}
 	
-	// Shows a list for an election of who the uer can vote for.
+	// Shows a list for an election of who the user can vote for.
 	function vote($election_id)
 	{
 		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -293,6 +293,124 @@ class Election extends CI_Controller {
 	{
 		$this->ion_auth->apply_for_candidacy($user_id);
 		redirect('home');
+	}
+	
+	//edit a user
+	function edit($election_id = FALSE)
+	{
+		
+		$query = $this->db->field_data('colleges');
+		if($query)
+		{
+    		$this->data['myDropdown'] = $query;
+    		//$this->load->view('auth/dropdown', $this->data);
+		}
+		
+		$this->data['title'] = "Edit";
+
+		if (!$this->ion_auth->is_admin())
+		{
+			redirect('election', 'refresh');
+		}
+		if($election_id){
+		$query = $this->db->get('elections');
+		foreach($query->result() as $row){
+			if ($row->election_id == $election_id){
+				$this->data['election_id'] = 	$election_id;
+				$this->data['name'] = 			$row->name;
+				$this->data['description'] = 	$row->description;
+				$this->data['college'] = 		$row->college;
+				$this->data['start_time'] = 	$row->start_time;
+				$this->data['end_time'] = 		$row->end_time;
+			}
+		}	}
+
+		//validate form input
+		$this->form_validation->set_rules('election_id', $this->lang->line('edit_user_validation_fname_label'));
+		$this->form_validation->set_rules('name', $this->lang->line('edit_user_validation_lname_label'));
+		$this->form_validation->set_rules('description', $this->lang->line('edit_user_validation_EUID_label'));
+		$this->form_validation->set_rules('college', $this->lang->line('edit_user_validation_college_label'));
+		$this->form_validation->set_rules('start_time', $this->lang->line('edit_user_validation_groups_label'));
+		$this->form_validation->set_rules('end_time', $this->lang->line('edit_user_validation_groups_label'));
+		
+		if (isset($_POST) && !empty($_POST))
+		{
+			/*/ do we have a valid request?
+			if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+			{
+				show_error($this->lang->line('error_csrf'));
+			}/*/
+
+			if ($this->form_validation->run() === TRUE)
+			{
+				$data = array(
+					'election_id' 	=> $this->input->post('election_id'),
+					'name'  		=> $this->input->post('name'),
+					'description'   => $this->input->post('description'),
+					'college'      	=> $this->input->post('college'),
+					'start_time'    => $this->input->post('start_time'),
+					'end_time'      => $this->input->post('end_time'),
+				);			
+				$this->db->get('elections');
+				$this->db->where('election_id',$data['election_id']);
+				$this->db->update('elections', $data);
+								
+				    if ($this->ion_auth->is_admin())
+					{
+						redirect('election', 'refresh');
+					}
+					else
+					{
+						redirect('/', 'refresh');
+					}
+				
+			}
+		}
+
+		//display the edit user form
+		//$this->data['csrf'] = $this->_get_csrf_nonce();
+
+		//set the flash data error message if there is one
+		$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+		$this->data['election_id'] = array(
+			'name'  => 'election_id',
+			'id'    => 'election_id',
+			'type'  => 'text',
+			'value' => $this->form_validation->set_value('election_id', $this->data['election_id']),
+		);
+		$this->data['name'] = array(
+			'name'  => 'name',
+			'id'    => 'name',
+			'type'  => 'text',
+			'value' => $this->form_validation->set_value('name', $this->data['name']),
+		);
+		$this->data['description'] = array(
+			'name'  => 'description',
+			'id'    => 'description',
+			'type'  => 'text',
+			'value' => $this->form_validation->set_value('description', $this->data['description']),
+		);
+		$this->data['college'] = array(
+			'name'  => 'college',
+			'id'    => 'college',
+			'type'  => 'text',
+			'value' => $this->form_validation->set_value('college', $this->data['college']),
+		);
+		$this->data['start_time'] = array(
+			'name' => 'start_time',
+			'id'   => 'start_time',
+			'type' => 'text',
+			'value' => $this->form_validation->set_value('start_time', $this->data['start_time']),
+		);
+		$this->data['end_time'] = array(
+			'name' => 'end_time',
+			'id'   => 'end_time',
+			'type' => 'text',
+			'value' => $this->form_validation->set_value('end_time', $this->data['end_time']),
+		);
+		
+		$this->_render_page('election/edit', $this->data);
 	}
 	
 	function _render_page($view, $data=null, $render=false)

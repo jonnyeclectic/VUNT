@@ -53,11 +53,11 @@
 
       <?php endif ?>
 
-      <?php echo form_hidden('id', $user->id);?>
+      <?php echo form_hidden('election_id', $user->id);?>
       <?php echo form_hidden($csrf); ?>
 
       <p><?php //echo form_submit('submit', lang('edit_user_submit_btn'));?></p>
-  	  <form><select multiple = "multiple" id = "submit" name = "college" onchange="this.form.submit();"><p> <!-- Save User's input when things are selected-->
+  	  <form><select id = "submit" name = "college" onchange="this.form.submit();"><p> <!-- Save User's input when things are selected-->
       <?php foreach($myDropdown as $dd)										// --Dropdown menu--
       echo "<option value='". $dd->name ."'>". $dd->name ."</option>";?>	 <!-- Display colleges in list-->
 	  </p><input type="submit" name="submit" value="Create"></select></form> <!-- Save User's input-->

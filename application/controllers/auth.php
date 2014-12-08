@@ -13,7 +13,6 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 		$this->lang->load('auth');
 		$this->load->view('auth/home');
-		
 	}
 
 	//redirect if needed, otherwise display the user list
@@ -475,7 +474,6 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 			$email    = strtolower($this->input->post('email'));
 			$password = $this->input->post('password');
 			$checked  = $this->input->post('checked');
-			//echo $checked;//$remember = (bool) $this->input->post('remember');
 
 			$additional_data = array(
 				'first_name' => $this->input->post('first_name'),
