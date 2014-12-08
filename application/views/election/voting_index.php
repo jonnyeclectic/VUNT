@@ -10,7 +10,7 @@
 	</tr>
 	<?php foreach ($candidates as $candidate):?>
 		<tr>
-            <td><?php echo htmlspecialchars($candidate['first_name'].' '.$candidate['last_name'],ENT_QUOTES,'UTF-8');?></td>
+            <td><?php echo anchor('auth/view_user/'.$candidate['candidate_id'].'/'.$election_id, htmlspecialchars($candidate['first_name'].' '.$candidate['last_name'],ENT_QUOTES,'UTF-8'));?></td>
             <td><?php echo htmlspecialchars($candidate['num_votes']);?></td>
             <?php if (!isset($voted)): ?>
            		<td><?php echo anchor('election/vote_for/'.$election_id.'/'.$candidate['candidate_id'], 'Vote');?></td>

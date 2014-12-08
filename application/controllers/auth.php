@@ -709,6 +709,13 @@ function multi_dropdown( $name, array $options, array $selected=null, $size=4 )
 		$this->_render_page('auth/edit_user', $this->data);
 	}
 
+	function view_user($user_id, $election_id)
+	{
+		$this->data['users'] = $this->ion_auth->user($user_id)->result();
+		$this->data['election'] = $election_id;
+		$this->_render_page('auth/view_user', $this->data);
+	}
+
 	// create a new group
 	function create_group()
 	{
